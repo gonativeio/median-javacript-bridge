@@ -1,0 +1,21 @@
+{
+  "name": "gonative-js",
+  "version": "1.0.0",
+  "description": "GoNative bridge and utilities for JS web frameworks",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gonative/gonative-js.git",
+    "baseUrl": "https://github.com/gonative/gonative-js"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Hunaid Hassan",
+    "email": "hunaid@gonative.io"
+  },
+  "license": "ISC"
+}
