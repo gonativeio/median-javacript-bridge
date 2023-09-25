@@ -1,4 +1,4 @@
-declare module "gonative" {
+declare module "median" {
   type Params = Record<string, string | number | boolean | null>;
 
   interface AdMob {
@@ -272,7 +272,7 @@ declare module "gonative" {
     };
   }
 
-  export default interface Gonative {
+  export default interface Median {
     admob: AdMob;
     appreview: AppReview;
     appsflyer: AppsFlyer;
