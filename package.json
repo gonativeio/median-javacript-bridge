@@ -1,7 +1,7 @@
 {
-  "name": "gonative-js",
+  "name": "median-js-bridge",
   "version": "1.0.0",
-  "description": "GoNative bridge and utilities for JS web frameworks",
+  "description": "Median bridge and utilities for JS web frameworks",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
@@ -9,13 +9,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gonative/gonative-js.git",
-    "baseUrl": "https://github.com/gonative/gonative-js"
+    "url": "git+https://github.com/gonativeio/median-javacript-bridge.git"
   },
-  "keywords": [],
+  "keywords": ["median", "gonative"],
   "author": {
     "name": "Hunaid Hassan",
-    "email": "hunaid@gonative.io"
+    "email": "hunaid@median.co"
   },
   "license": "ISC"
 }
