@@ -1,0 +1,1 @@
+{"version":3,"file":"nativebridge.js","sourceRoot":"","sources":["../../src/plugin/nativebridge.ts"],"names":[],"mappings":";;AAAA,4CAA0C;AAE1C,MAAM,YAAY,GAAG;IACnB,MAAM,EAAE,UAAU,MAAW;QAC3B,IAAA,sBAAU,EAAC,8BAA8B,EAAE,MAAM,CAAC,CAAC;IACrD,CAAC;CACF,CAAC;AAEF,kBAAe,YAAY,CAAC"}

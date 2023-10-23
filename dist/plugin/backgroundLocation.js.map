@@ -1,0 +1,1 @@
+{"version":3,"file":"backgroundLocation.js","sourceRoot":"","sources":["../../src/plugin/backgroundLocation.ts"],"names":[],"mappings":";;AAAA,4CAA0C;AAE1C,MAAM,kBAAkB,GAAG;IACzB,KAAK,EAAE,UAAU,MAAW;QAC1B,IAAA,sBAAU,EAAC,mCAAmC,EAAE,MAAM,EAAE,IAAI,CAAC,CAAC;IAChE,CAAC;IACD,IAAI,EAAE;QACJ,IAAA,sBAAU,EAAC,kCAAkC,CAAC,CAAC;IACjD,CAAC;CACF,CAAC;AAEF,kBAAe,kBAAkB,CAAC"}
