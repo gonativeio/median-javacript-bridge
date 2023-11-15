@@ -1,11 +1,11 @@
-import { addCommandCallback } from "../utilities";
+import { addCommandCallback } from '../utilities';
 
 const plaid = {
   linkBank: function (params: any) {
-    return addCommandCallback("median://plaid/linkBank", params);
+    return addCommandCallback('median://plaid/linkBank', params);
   },
   verifyIdentity: function (params: any) {
-    return addCommandCallback("median://plaid/verifyIdentity", params);
+    return addCommandCallback('median://plaid/verifyIdentity', params);
   },
 };
 

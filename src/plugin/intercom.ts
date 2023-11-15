@@ -1,30 +1,26 @@
-import { addCommand, addCommandCallback } from "../utilities";
+import { addCommand, addCommandCallback } from '../utilities';
 
 const intercom = {
   registerPush: function (params: any) {
-    return addCommandCallback("median://intercom/registerPush", params);
+    return addCommandCallback('median://intercom/registerPush', params);
   },
   updateUser: function (params: any) {
-    addCommand("median://intercom/updateUser", params);
+    addCommand('median://intercom/updateUser', params);
   },
   logEvent: function (params: any) {
-    addCommand("median://intercom/logEvent", params);
+    addCommand('median://intercom/logEvent', params);
   },
   logout: function () {
-    addCommand("median://intercom/logout");
+    addCommand('median://intercom/logout');
   },
   presentCarousel: function (params: any) {
-    addCommand("median://intercom/presentCarousel", params);
+    addCommand('median://intercom/presentCarousel', params);
   },
   permissionStatus: function (params: any) {
-    return addCommandCallback(
-      "median://intercom/permissionStatus",
-      params,
-      true
-    );
+    return addCommandCallback('median://intercom/permissionStatus', params, true);
   },
   requestPermission: function (params: any) {
-    return addCommandCallback("median://intercom/registerPush", params, true);
+    return addCommandCallback('median://intercom/registerPush', params, true);
   },
 };
 

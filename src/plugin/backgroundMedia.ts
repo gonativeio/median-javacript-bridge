@@ -1,34 +1,31 @@
-import { addCommand, addCommandCallback } from "../utilities";
+import { addCommand, addCommandCallback } from '../utilities';
 
 const backgroundMedia = {
   playTrack: function (params: any) {
-    if (typeof params === "number") {
+    if (typeof params === 'number') {
       params = {
         time: params,
       };
     }
-    addCommand("median://backgroundMedia/playTrack", params);
+    addCommand('median://backgroundMedia/playTrack', params);
   },
   streamPlaylist: function (params: any) {
-    addCommand("median://backgroundMedia/streamPlaylist", params);
+    addCommand('median://backgroundMedia/streamPlaylist', params);
   },
   pause: function () {
-    addCommand("median://backgroundMedia/pause");
+    addCommand('median://backgroundMedia/pause');
   },
   stop: function () {
-    addCommand("median://backgroundMedia/stop");
+    addCommand('median://backgroundMedia/stop');
   },
   play: function () {
-    addCommand("median://backgroundMedia/play");
+    addCommand('median://backgroundMedia/play');
   },
   resume: function () {
-    addCommand("median://backgroundMedia/resume");
+    addCommand('median://backgroundMedia/resume');
   },
   getPlayerStatus: function (params: any) {
-    return addCommandCallback(
-      "median://backgroundMedia/getPlayerStatus",
-      params
-    );
+    return addCommandCallback('median://backgroundMedia/getPlayerStatus', params);
   },
 };
 

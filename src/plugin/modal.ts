@@ -1,8 +1,8 @@
-import { addCommandCallback } from "../utilities";
+import { addCommandCallback } from '../utilities';
 
 const modal = {
   launch: function (params: any) {
-    return addCommandCallback("median://modal/launch", params);
+    return addCommandCallback('median://modal/launch', params);
   },
 };
 

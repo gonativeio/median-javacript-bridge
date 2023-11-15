@@ -1,8 +1,8 @@
-import { addCommand } from "../utilities";
+import { addCommand } from '../utilities';
 
 const nativebridge = {
   custom: function (params: any) {
-    addCommand("median://nativebridge/custom", params);
+    addCommand('median://nativebridge/custom', params);
   },
 };
 

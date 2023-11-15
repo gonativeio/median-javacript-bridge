@@ -1,17 +1,17 @@
-import { addCommand, addCommandCallback } from "../utilities";
+import { addCommand, addCommandCallback } from '../utilities';
 
 const esmiley = {
   scan: function (timeout: any) {
-    return addCommandCallback("median://esmiley/scan", { timeout });
+    return addCommandCallback('median://esmiley/scan', { timeout });
   },
   connect: function (deviceId: any) {
-    return addCommandCallback("median://esmiley/connect", { deviceId });
+    return addCommandCallback('median://esmiley/connect', { deviceId });
   },
   disconnect: function () {
-    addCommand("median://esmiley/disconnect");
+    addCommand('median://esmiley/disconnect');
   },
   send: function (object: any) {
-    return addCommandCallback("median://esmiley/send", { object });
+    return addCommandCallback('median://esmiley/send', { object });
   },
 };
 

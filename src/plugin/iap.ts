@@ -1,25 +1,25 @@
-import { addCommand, addCommandCallback } from "../utilities";
+import { addCommand, addCommandCallback } from '../utilities';
 
 const iap = {
   purchase: function (params: any) {
-    var productID = params.productID;
+    const productID = params.productID;
     params.productID = null;
-    return addCommandCallback("median://purchase/" + productID, params);
+    return addCommandCallback('median://purchase/' + productID, params);
   },
   manageSubscription: function (params: any) {
-    addCommand("median://iap/manageSubscription", params);
+    addCommand('median://iap/manageSubscription', params);
   },
   manageAllSubscriptions: function () {
-    addCommand("median://iap/manageAllSubscriptions");
+    addCommand('median://iap/manageAllSubscriptions');
   },
   restorePurchases: function () {
-    addCommand("median://iap/restorePurchases");
+    addCommand('median://iap/restorePurchases');
   },
   info: function () {
-    return addCommandCallback("median://iap/info");
+    return addCommandCallback('median://iap/info');
   },
   refresh: function () {
-    addCommand("median://iap/refresh");
+    addCommand('median://iap/refresh');
   },
 };
 

@@ -1,4 +1,4 @@
-import localpreferences from "./localpreferences";
+import localpreferences from './localpreferences';
 
 const storage = {
   app: localpreferences.nonpersistent,

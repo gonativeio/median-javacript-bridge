@@ -1,4 +1,4 @@
-import iap from "./iap";
+import iap from './iap';
 
 const purchase = iap.purchase;
 

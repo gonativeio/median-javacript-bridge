@@ -1,8 +1,8 @@
-import { addCommand } from "../utilities";
+import { addCommand } from '../utilities';
 
 const beacon = {
   scan: function (params: any) {
-    addCommand("median://beacon/scan", params);
+    addCommand('median://beacon/scan', params);
   },
 };
 

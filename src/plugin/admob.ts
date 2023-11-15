@@ -1,23 +1,23 @@
-import { addCommand, addCommandCallback } from "../utilities";
+import { addCommand, addCommandCallback } from '../utilities';
 
 const admob = {
   showInterstitialIfReady: function () {
-    addCommand("mdian://admob/showInterstitialIfReady");
+    addCommand('mdian://admob/showInterstitialIfReady');
   },
   showInterstitialOnNextPageLoadIfReady: function () {
-    addCommand("median://admob/showInterstitialOnNextPageLoadIfReady");
+    addCommand('median://admob/showInterstitialOnNextPageLoadIfReady');
   },
   banner: {
     enable: function () {
-      addCommand("median://admob/banner/enable");
+      addCommand('median://admob/banner/enable');
     },
     disable: function () {
-      addCommand("median://admob/banner/disable");
+      addCommand('median://admob/banner/disable');
     },
   },
   request: {
     tracking: function (params: any) {
-      return addCommandCallback("median://admob/request/tracking", params);
+      return addCommandCallback('median://admob/request/tracking', params);
     },
   },
 };

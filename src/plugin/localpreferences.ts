@@ -1,52 +1,43 @@
-import { addCommand, addCommandCallback } from "../utilities";
+import { addCommand, addCommandCallback } from '../utilities';
 
 const localpreferences = {
   nonpersistent: {
     set: function (params: any) {
-      addCommand("median://localpreferences/nonpersistent/set", params);
+      addCommand('median://localpreferences/nonpersistent/set', params);
     },
     get: function (params: any) {
-      return addCommandCallback(
-        "median://localpreferences/nonpersistent/get",
-        params
-      );
+      return addCommandCallback('median://localpreferences/nonpersistent/get', params);
     },
     delete: function (params: any) {
-      addCommand("median://localpreferences/nonpersistent/delete", params);
+      addCommand('median://localpreferences/nonpersistent/delete', params);
     },
     deleteAll: function (params: any) {
-      addCommand("median://localpreferences/nonpersistent/deleteAll", params);
+      addCommand('median://localpreferences/nonpersistent/deleteAll', params);
     },
   },
   persistent: {
     set: function (params: any) {
-      addCommand("median://localpreferences/persistent/set", params);
+      addCommand('median://localpreferences/persistent/set', params);
     },
     get: function (params: any) {
-      return addCommandCallback(
-        "median://localpreferences/persistent/get",
-        params
-      );
+      return addCommandCallback('median://localpreferences/persistent/get', params);
     },
     delete: function (params: any) {
-      addCommand("median://localpreferences/persistent/delete", params);
+      addCommand('median://localpreferences/persistent/delete', params);
     },
     deleteAll: function (params: any) {
-      addCommand("median://localpreferences/persistent/deleteAll", params);
+      addCommand('median://localpreferences/persistent/deleteAll', params);
     },
   },
   filesystem: {
     save: function (params: any) {
-      addCommand("median://localpreferences/filesystem/save", params);
+      addCommand('median://localpreferences/filesystem/save', params);
     },
     read: function (params: any) {
-      return addCommandCallback(
-        "median://localpreferences/filesystem/read",
-        params
-      );
+      return addCommandCallback('median://localpreferences/filesystem/read', params);
     },
     delete: function (params: any) {
-      addCommand("median://localpreferences/filesystem/delete", params);
+      addCommand('median://localpreferences/filesystem/delete', params);
     },
   },
 };

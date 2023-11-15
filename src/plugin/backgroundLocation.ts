@@ -1,11 +1,11 @@
-import { addCommand } from "../utilities";
+import { addCommand } from '../utilities';
 
 const backgroundLocation = {
   start: function (params: any) {
-    addCommand("median://backgroundLocation/start", params, true);
+    addCommand('median://backgroundLocation/start', params, true);
   },
   stop: function () {
-    addCommand("median://backgroundLocation/stop");
+    addCommand('median://backgroundLocation/stop');
   },
 };
 

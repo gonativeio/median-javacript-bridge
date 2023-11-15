@@ -1,11 +1,11 @@
-import { addCommand, addCommandCallback } from "../utilities";
+import { addCommand, addCommandCallback } from '../utilities';
 
 const barcode = {
   scan: function (params: any) {
-    return addCommandCallback("median://barcode/scan", params);
+    return addCommandCallback('median://barcode/scan', params);
   },
   setPrompt: function (params: any) {
-    return addCommand("median://barcode/setPrompt", { prompt: params });
+    return addCommand('median://barcode/setPrompt', { prompt: params });
   },
 };
 

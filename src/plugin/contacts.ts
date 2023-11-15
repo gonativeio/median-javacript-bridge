@@ -1,11 +1,11 @@
-import { addCommandCallback } from "../utilities";
+import { addCommandCallback } from '../utilities';
 
 const contacts = {
   getAll: function (params: any) {
-    return addCommandCallback("median://contacts/getAll", params);
+    return addCommandCallback('median://contacts/getAll', params);
   },
   getPermissionStatus: function (params: any) {
-    return addCommandCallback("median://contacts/getPermissionStatus", params);
+    return addCommandCallback('median://contacts/getPermissionStatus', params);
   },
 };
 

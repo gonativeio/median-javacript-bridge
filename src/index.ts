@@ -35,7 +35,7 @@ import {
   socialLogin,
   storage,
   twilio,
-} from "./plugin";
+} from './plugin';
 
 declare global {
   interface Window {
@@ -49,17 +49,12 @@ declare global {
 
 class Median {
   isNativeApp = () => {
-    return (
-      window &&
-      window.webkit &&
-      window.webkit.messageHandlers &&
-      window.webkit.messageHandlers.JSBridge
-    );
+    return !!window?.webkit?.messageHandlers?.JSBridge;
   };
 
-  #onReadyCallback: Function | undefined;
+  #onReadyCallback?: Function;
   onReady = (callback: Function) => {
-    if (typeof callback === "function") {
+    if (typeof callback === 'function') {
       this.#onReadyCallback = callback;
       let counter = 0;
 

@@ -1,11 +1,11 @@
-import { addCommand, addCommandCallback } from "../utilities";
+import { addCommand, addCommandCallback } from '../utilities';
 
 const twilio = {
   video: {
     join: function (params: any) {
       if (params.callback) {
-        return addCommandCallback("median://twilio/video/join", params);
-      } else addCommand("median://twilio/video/join", params);
+        return addCommandCallback('median://twilio/video/join', params);
+      } else addCommand('median://twilio/video/join', params);
     },
   },
 };

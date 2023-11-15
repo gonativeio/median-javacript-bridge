@@ -1,8 +1,8 @@
-import { addCommand } from "../utilities";
+import { addCommand } from '../utilities';
 
 const autorefresh = {
   set: function (params: any) {
-    addCommand("median://autorefresh/set", params);
+    addCommand('median://autorefresh/set', params);
   },
 };
 

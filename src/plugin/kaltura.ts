@@ -1,8 +1,8 @@
-import { addCommand } from "../utilities";
+import { addCommand } from '../utilities';
 
 const kaltura = {
   play: function (params: any) {
-    addCommand("median://kaltura/play", params);
+    addCommand('median://kaltura/play', params);
   },
 };
 

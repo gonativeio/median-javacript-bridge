@@ -1,8 +1,8 @@
-import { addCommand } from "../utilities";
+import { addCommand } from '../utilities';
 
 const haptics = {
   trigger: function (params: any) {
-    addCommand("median://haptics/trigger", params);
+    addCommand('median://haptics/trigger', params);
   },
 };
 

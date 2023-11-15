@@ -1,11 +1,11 @@
-import { addCommand } from "../utilities";
+import { addCommand } from '../utilities';
 
 const appsflyer = {
   logEvent: function (eventName: any, eventValues: any) {
-    addCommand("median://appsflyer/logEvent", { eventName, eventValues });
+    addCommand('median://appsflyer/logEvent', { eventName, eventValues });
   },
   setCustomerUserId: function (userId: any) {
-    addCommand("median://appsflyer/setCustomerUserId", { userId });
+    addCommand('median://appsflyer/setCustomerUserId', { userId });
   },
 };
 
