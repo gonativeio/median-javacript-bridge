@@ -1,1 +1,0 @@
-{"version":3,"file":"modal.js","sourceRoot":"","sources":["../../src/plugin/modal.ts"],"names":[],"mappings":";;AAAA,4CAAkD;AAElD,MAAM,KAAK,GAAG;IACZ,MAAM,EAAE,UAAU,MAAW;QAC3B,OAAO,IAAA,8BAAkB,EAAC,uBAAuB,EAAE,MAAM,CAAC,CAAC;IAC7D,CAAC;CACF,CAAC;AAEF,kBAAe,KAAK,CAAC"}

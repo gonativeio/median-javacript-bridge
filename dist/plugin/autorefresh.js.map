@@ -1,1 +1,0 @@
-{"version":3,"file":"autorefresh.js","sourceRoot":"","sources":["../../src/plugin/autorefresh.ts"],"names":[],"mappings":";;AAAA,4CAA0C;AAE1C,MAAM,WAAW,GAAG;IAClB,GAAG,EAAE,UAAU,MAAW;QACxB,IAAA,sBAAU,EAAC,0BAA0B,EAAE,MAAM,CAAC,CAAC;IACjD,CAAC;CACF,CAAC;AAEF,kBAAe,WAAW,CAAC"}

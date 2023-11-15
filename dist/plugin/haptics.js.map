@@ -1,1 +1,0 @@
-{"version":3,"file":"haptics.js","sourceRoot":"","sources":["../../src/plugin/haptics.ts"],"names":[],"mappings":";;AAAA,4CAA0C;AAE1C,MAAM,OAAO,GAAG;IACd,OAAO,EAAE,UAAU,MAAW;QAC5B,IAAA,sBAAU,EAAC,0BAA0B,EAAE,MAAM,CAAC,CAAC;IACjD,CAAC;CACF,CAAC;AAEF,kBAAe,OAAO,CAAC"}
