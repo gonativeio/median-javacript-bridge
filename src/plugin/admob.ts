@@ -2,7 +2,7 @@ import { addCommand, addCommandCallback } from '../utilities';
 
 const admob = {
   showInterstitialIfReady: function () {
-    addCommand('mdian://admob/showInterstitialIfReady');
+    addCommand('median://admob/showInterstitialIfReady');
   },
   showInterstitialOnNextPageLoadIfReady: function () {
     addCommand('median://admob/showInterstitialOnNextPageLoadIfReady');
