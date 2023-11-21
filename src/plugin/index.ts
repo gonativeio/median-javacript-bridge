@@ -25,7 +25,6 @@ export { default as localpreferences } from './localpreferences';
 export { default as modal } from './modal';
 export { default as moengage } from './moengage';
 export { default as moxo } from './moxo';
-export { default as nativebridge } from './nativebridge';
 export { default as onesignal } from './onesignal';
 export { default as opentok } from './opentok';
 export { default as permissions } from './permissions';
