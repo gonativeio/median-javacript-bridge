@@ -1,25 +1,30 @@
+import { DeviceInfo, KeyboardInfo } from '../types';
 import { addCommand, addCommandCallback } from '../utilities';
+
+type ClipboardGetParams = { callback: (result: { data: string }) => void };
 
 const clipboard = {
   set: function (params: { data: string }) {
     addCommand('median://clipboard/set', params);
   },
-  get: function (params: any) {
+  get: function (params: ClipboardGetParams) {
     return addCommandCallback('median://clipboard/get', params);
   },
 };
 
 const config = {
-  set: function (params: any) {
+  set: function (params: { initialUrl: string }) {
     addCommand('median://config/set', params);
   },
 };
 
+type ConnectivityParams = { callback: (data: { connected: number; type: string }) => void };
+
 const connectivity = {
-  get: function (params: any) {
+  get: function (params: ConnectivityParams) {
     return addCommandCallback('median://connectivity/get', params);
   },
-  subscribe: function (params: any) {
+  subscribe: function (params: ConnectivityParams) {
     return addCommandCallback('median://connectivity/subscribe', params, true);
   },
   unsubscribe: function () {
@@ -27,21 +32,33 @@ const connectivity = {
   },
 };
 
-const deviceInfo = function (params: any) {
+export type DeviceInfoParams = { callback: (data: DeviceInfo) => void };
+
+const deviceInfo = function (params: DeviceInfoParams) {
   return addCommandCallback('median://run/median_device_info', params, true);
 };
 
+type InternalExternalParams = {
+  rules: {
+    id: number;
+    regex: string;
+    internal: boolean;
+  }[];
+};
+
 const internalExternal = {
-  set: function (params: any) {
+  set: function (params: InternalExternalParams) {
     addCommand('median://internalExternal/set', params);
   },
 };
 
+type KeyboardInfoParams = { callback: (data: KeyboardInfo) => void };
+
 const keyboard = {
-  info: function () {
-    return addCommandCallback('median://keyboard/info');
+  info: function (params: KeyboardInfoParams) {
+    return addCommandCallback('median://keyboard/info', params);
   },
-  listen: function (callback: any) {
+  listen: function (callback: (data: KeyboardInfo) => void) {
     addCommand('median://keyboard/listen', { callback });
   },
   showAccessoryView: function (visible: boolean) {
