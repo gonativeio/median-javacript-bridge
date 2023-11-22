@@ -1,4 +1,4 @@
-import { addCommand } from '../utilities';
+import { addCommand } from '../utils';
 
 const haptics = {
   trigger: function (params: any) {

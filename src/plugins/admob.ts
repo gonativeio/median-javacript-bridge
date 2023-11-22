@@ -1,4 +1,10 @@
-import { addCommand, addCommandCallback } from '../utilities';
+import { addCommand, addCommandCallback } from '../utils';
+
+type AdmobRequestTrackingResult = { status: 'authorized' | 'denied' | 'restricted' };
+
+type AdmobRequestTrackingParams = {
+  callback: (data: AdmobRequestTrackingResult) => void;
+};
 
 const admob = {
   showInterstitialIfReady: function () {
@@ -16,8 +22,8 @@ const admob = {
     },
   },
   request: {
-    tracking: function (params: any) {
-      return addCommandCallback('median://admob/request/tracking', params);
+    tracking: function (params: AdmobRequestTrackingParams) {
+      return addCommandCallback<AdmobRequestTrackingResult>('median://admob/request/tracking', params);
     },
   },
 };

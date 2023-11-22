@@ -1,6 +1,8 @@
-export type AnyType = boolean | number | string;
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-export type AnyData = Record<string, AnyType | AnyType[] | Record<string, AnyType>>;
+export type AnyData = any;
+
+export type DefaultResponse = { success: boolean; error?: string };
 
 export type DeviceInfo = {
   platform: 'ios' | 'android';

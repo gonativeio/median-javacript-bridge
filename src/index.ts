@@ -1,19 +1,9 @@
 import * as plugins from './plugins';
 import { general, ios, android } from './commands';
 
-declare global {
-  interface Window {
-    webkit?: {
-      messageHandlers?: {
-        JSBridge?: any;
-      };
-    };
-  }
-}
-
 class Median {
   isNativeApp = () => {
-    return !!window?.webkit?.messageHandlers?.JSBridge;
+    return !!window?.webkit?.messageHandlers?.JSBridge || !!window?.JSBridge;
   };
 
   #onReadyCallback?: () => void;

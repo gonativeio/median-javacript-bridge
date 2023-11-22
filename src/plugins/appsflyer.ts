@@ -1,10 +1,11 @@
-import { addCommand } from '../utilities';
+import { AnyData } from '../types';
+import { addCommand } from '../utils';
 
 const appsflyer = {
-  logEvent: function (eventName: any, eventValues: any) {
+  logEvent: function (eventName: string, eventValues: AnyData) {
     addCommand('median://appsflyer/logEvent', { eventName, eventValues });
   },
-  setCustomerUserId: function (userId: any) {
+  setCustomerUserId: function (userId: string) {
     addCommand('median://appsflyer/setCustomerUserId', { userId });
   },
 };

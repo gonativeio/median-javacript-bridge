@@ -1,10 +1,15 @@
-import { addCommand, addCommandCallback } from '../utilities';
+import { addCommand, addCommandCallback } from '../utils';
+
+type AppReviewPromptParams = {
+  callback: () => void;
+};
 
 const appreview = {
-  prompt: function (params: any) {
-    if (params?.callback) {
+  prompt: function (params?: AppReviewPromptParams) {
+    if (params) {
       return addCommandCallback('median://appReview/prompt', params);
-    } else addCommand('median://appReview/prompt');
+    }
+    addCommand('median://appReview/prompt');
   },
 };
 

@@ -1,8 +1,8 @@
-import { addCommand, addCommandCallback } from '../utilities';
+import { addCommand, addCommandCallback } from '../utils';
 
-type AttConsentParams = {
-  callback: (data: { granted: boolean }) => void;
-};
+type AttConsentResult = { granted: boolean };
+
+type AttConsentParams = { callback: (data: AttConsentResult) => void };
 
 const ios = {
   window: {
@@ -26,10 +26,10 @@ const ios = {
   },
   attconsent: {
     request: function (params: AttConsentParams) {
-      return addCommandCallback('median://ios/attconsent/request', params);
+      return addCommandCallback<AttConsentResult>('median://ios/attconsent/request', params);
     },
     status: function (params: AttConsentParams) {
-      return addCommandCallback('median://ios/attconsent/status', params);
+      return addCommandCallback<AttConsentResult>('median://ios/attconsent/status', params);
     },
   },
   backgroundAudio: {

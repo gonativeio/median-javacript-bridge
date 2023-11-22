@@ -1,14 +1,16 @@
 import { AnyData, DeviceInfo, KeyboardInfo } from '../types';
-import { addCommand, addCommandCallback } from '../utilities';
+import { addCommand, addCommandCallback } from '../utils';
 
-type ClipboardGetParams = { callback: (result: { data: string }) => void };
+type ClipboardResult = { data: string };
+
+type ClipboardGetParams = { callback: (result: ClipboardResult) => void };
 
 const clipboard = {
-  set: function (params: { data: string }) {
+  set: function (params: ClipboardResult) {
     addCommand('median://clipboard/set', params);
   },
   get: function (params: ClipboardGetParams) {
-    return addCommandCallback('median://clipboard/get', params);
+    return addCommandCallback<ClipboardResult>('median://clipboard/get', params);
   },
 };
 
@@ -18,14 +20,16 @@ const config = {
   },
 };
 
-type ConnectivityParams = { callback: (data: { connected: number; type: string }) => void };
+type ConnectivityResult = { connected: number; type: string };
+
+type ConnectivityParams = { callback: (data: ConnectivityResult) => void };
 
 const connectivity = {
   get: function (params: ConnectivityParams) {
-    return addCommandCallback('median://connectivity/get', params);
+    return addCommandCallback<ConnectivityResult>('median://connectivity/get', params);
   },
   subscribe: function (params: ConnectivityParams) {
-    return addCommandCallback('median://connectivity/subscribe', params, true);
+    return addCommandCallback<ConnectivityResult>('median://connectivity/subscribe', params, true);
   },
   unsubscribe: function () {
     addCommand('median://connectivity/unsubscribe');
@@ -35,7 +39,7 @@ const connectivity = {
 export type DeviceInfoParams = { callback: (data: DeviceInfo) => void };
 
 const deviceInfo = function (params: DeviceInfoParams) {
-  return addCommandCallback('median://run/median_device_info', params, true);
+  return addCommandCallback<DeviceInfo>('median://run/median_device_info', params, true);
 };
 
 type InternalExternalParams = {
@@ -56,7 +60,7 @@ type KeyboardInfoParams = { callback: (data: KeyboardInfo) => void };
 
 const keyboard = {
   info: function (params: KeyboardInfoParams) {
-    return addCommandCallback('median://keyboard/info', params);
+    return addCommandCallback<KeyboardInfo>('median://keyboard/info', params);
   },
   listen: function (callback: (data: KeyboardInfo) => void) {
     addCommand('median://keyboard/listen', { callback });
@@ -222,14 +226,14 @@ type SidebarSetParams = {
   persist: boolean;
 };
 
+type SidebarGetResult = {
+  active: boolean;
+  items: (SidebarItem | SidebarGroupItem)[] | null;
+  name: string;
+}[];
+
 type SidebarGetParams = {
-  callback: (
-    data: {
-      active: boolean;
-      items: (SidebarItem | SidebarGroupItem)[] | null;
-      name: string;
-    }[]
-  ) => void;
+  callback: (data: SidebarGetResult) => void;
 };
 
 const sidebar = {
@@ -237,7 +241,7 @@ const sidebar = {
     addCommand('median://sidebar/setItems', params);
   },
   getItems: function (params: SidebarGetParams) {
-    return addCommandCallback('median://sidebar/getItems', params);
+    return addCommandCallback<SidebarGetResult>('median://sidebar/getItems', params);
   },
 };
 
