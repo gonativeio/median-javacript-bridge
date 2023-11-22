@@ -1,3 +1,18 @@
+interface JSBridgeType {
+  postMessage?: (data: string) => void;
+}
+
+declare global {
+  interface Window {
+    webkit?: {
+      messageHandlers?: {
+        JSBridge?: JSBridgeType;
+      };
+    };
+    JSBridge?: JSBridgeType;
+  }
+}
+
 export function addCommandCallback(command?: any, params?: any, persistCallback?: boolean) {
   if (params && params.callback) {
     // execute command with provided callback function
@@ -54,5 +69,10 @@ export function addCommand(command?: any, params?: any, persistCallback?: boolea
     data = JSON.stringify(commandObject);
   } else data = command;
 
-  window.webkit?.messageHandlers?.JSBridge?.postMessage(data);
+  if (window.JSBridge?.postMessage) {
+    window.JSBridge.postMessage(data);
+  }
+  if (window.webkit?.messageHandlers?.JSBridge?.postMessage) {
+    window.webkit.messageHandlers.JSBridge.postMessage(data);
+  }
 }

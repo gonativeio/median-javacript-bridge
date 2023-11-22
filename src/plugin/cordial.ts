@@ -1,4 +1,4 @@
-import { addCommand, addCommandCallback } from '../utilities';
+import { addCommand, addCommandCallback } from '../utils';
 
 const cordial = {
   unsetContact: function (params: any) {

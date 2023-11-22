@@ -1,4 +1,4 @@
-import { addCommand } from '../utilities';
+import { addCommand } from '../utils';
 
 const appsflyer = {
   logEvent: function (eventName: any, eventValues: any) {

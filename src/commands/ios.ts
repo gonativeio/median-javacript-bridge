@@ -1,4 +1,4 @@
-import { addCommand, addCommandCallback } from '../utilities';
+import { addCommand, addCommandCallback } from '../utils';
 
 type AttConsentParams = {
   callback: (data: { granted: boolean }) => void;

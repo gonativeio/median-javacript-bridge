@@ -1,4 +1,4 @@
-import { addCommandCallback } from '../utilities';
+import { addCommandCallback } from '../utils';
 
 const contacts = {
   getAll: function (params: any) {
