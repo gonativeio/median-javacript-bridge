@@ -1,3 +1,7 @@
+export type AnyType = boolean | number | string;
+
+export type AnyData = Record<string, AnyType | AnyType[] | Record<string, AnyType>>;
+
 export type DeviceInfo = {
   platform: 'ios' | 'android';
   appId: string;

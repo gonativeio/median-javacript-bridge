@@ -1,4 +1,4 @@
-import * as plugins from './plugin';
+import * as plugins from './plugins';
 import { general, ios, android } from './commands';
 
 declare global {
@@ -59,7 +59,6 @@ class Median {
   sidebar = general.sidebar;
   statusbar = general.statusbar;
   tabNavigation = general.tabNavigation;
-  webconsolelogs = general.webconsolelogs;
   webview = general.webview;
   window = general.window;
 

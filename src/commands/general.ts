@@ -1,4 +1,4 @@
-import { DeviceInfo, KeyboardInfo } from '../types';
+import { AnyData, DeviceInfo, KeyboardInfo } from '../types';
 import { addCommand, addCommandCallback } from '../utilities';
 
 type ClipboardGetParams = { callback: (result: { data: string }) => void };
@@ -66,24 +66,41 @@ const keyboard = {
   },
 };
 
+type NativeBridgeCustomParams<T = AnyData> = AnyData & { callback: (data: T) => void };
+
+type NativeBridgeMultiParams = { data: { urls: string[] } };
+
 const nativebridge = {
-  custom: function (params: any) {
-    addCommand('median://nativebridge/custom', params);
+  custom: function (params: NativeBridgeCustomParams) {
+    return addCommandCallback('median://nativebridge/custom', params);
   },
-  multi: function (params: any) {
+  multi: function (params: NativeBridgeMultiParams) {
     addCommand('median://nativebridge/multi', params);
   },
 };
 
+type NavigationLevelsSetParams = {
+  active: boolean;
+  levels: { regex: string; level: number }[];
+  persist: boolean;
+};
+
+type NavigationLevelsSetCurrentParams = {
+  data: {
+    active: boolean;
+    levels: { regex: string; level: number }[];
+  };
+  persist: boolean;
+};
+
 const navigationLevels = {
-  set: function (parameters: any) {
-    const params = {
-      persist: parameters.persist,
-      data: parameters,
-    };
-    addCommand('median://navigationLevels/set', params);
+  set: function (data: NavigationLevelsSetParams) {
+    addCommand('median://navigationLevels/set', {
+      persist: data.persist,
+      data,
+    });
   },
-  setCurrent: function (params: any) {
+  setCurrent: function (params: NavigationLevelsSetCurrentParams) {
     addCommand('median://navigationLevels/set', params);
   },
   revert: function () {
@@ -93,28 +110,42 @@ const navigationLevels = {
 
 const navigationMaxWindows = {
   set: function (maxWindows: number, autoClose: boolean) {
-    const params = {
+    addCommand('median://navigationMaxWindows/set', {
       data: maxWindows,
       autoClose: autoClose,
       persist: true,
-    };
-    addCommand('median://navigationMaxWindows/set', params);
+    });
   },
   setCurrent: function (maxWindows: number, autoClose: boolean) {
-    const params = { data: maxWindows, autoClose: autoClose };
-    addCommand('median://navigationMaxWindows/set', params);
+    addCommand('median://navigationMaxWindows/set', {
+      data: maxWindows,
+      autoClose: autoClose,
+    });
   },
 };
 
+type NavigationTitlesSetParams = {
+  active: boolean;
+  titles: { regex: string; title: number }[];
+  persist: boolean;
+};
+
+type NavigationTitlesSetCurrentParams = {
+  data: {
+    active: boolean;
+    titles: { regex: string; title: number }[];
+  };
+  persist: boolean;
+};
+
 const navigationTitles = {
-  set: function (parameters: any) {
-    const params = {
-      persist: parameters.persist,
-      data: parameters,
-    };
-    addCommand('median://navigationTitles/set', params);
+  set: function (params: NavigationTitlesSetParams) {
+    addCommand('median://navigationTitles/set', {
+      persist: params.persist,
+      data: params,
+    });
   },
-  setCurrent: function (params: any) {
+  setCurrent: function (params: NavigationTitlesSetCurrentParams) {
     addCommand('median://navigationTitles/setCurrent', params);
   },
   revert: function () {
@@ -129,7 +160,7 @@ const open = {
 };
 
 const registration = {
-  send: function (customData: any) {
+  send: function (customData: AnyData) {
     addCommand('median://registration/send', { customData });
   },
 };
@@ -140,20 +171,19 @@ const run = {
   },
 };
 
+type ScreenBrightnessType = string | number;
+
 const screen = {
-  setBrightness: function (data: any) {
-    let params = data;
-    if (typeof params === 'number') {
-      params = { brightness: data };
-    }
+  setBrightness: function (
+    data: ScreenBrightnessType | { brightness: ScreenBrightnessType; restoreOnNavigation: boolean }
+  ) {
+    const params = ['number', 'string'].includes(typeof data) ? { brightness: data } : data;
     addCommand('median://screen/setBrightness', params);
   },
-  setMode: function (params: any) {
-    if (params.mode) {
-      addCommand('median://screen/setMode', params);
-    }
+  setMode: function (params: { mode: 'auto' | 'light' | 'dark' }) {
+    addCommand('median://screen/setMode', params);
   },
-  keepScreenOn: function (params: any) {
+  keepScreenOn: function (params: { enable: boolean }) {
     addCommand('median://screen/keepScreenOn', params);
   },
   keepScreenNormal: function () {
@@ -162,33 +192,71 @@ const screen = {
 };
 
 const share = {
-  sharePage: function (params: any) {
+  sharePage: function (params: { url: string; text?: string }) {
     addCommand('median://share/sharePage', params);
   },
-  downloadFile: function (params: any) {
+  downloadFile: function (params: { url: string; filename?: string }) {
     addCommand('median://share/downloadFile', params);
   },
-  downloadImage: function (params: any) {
+  downloadImage: function (params: { url: string }) {
     addCommand('median://share/downloadImage', params);
   },
 };
 
+type SidebarItem = {
+  icon?: string;
+  label: string;
+  url: string;
+};
+
+type SidebarGroupItem = {
+  icon?: string;
+  isGrouping: true;
+  label: string;
+  subLinks: SidebarItem[];
+};
+
+type SidebarSetParams = {
+  enabled: boolean;
+  items: (SidebarItem | SidebarGroupItem)[];
+  persist: boolean;
+};
+
+type SidebarGetParams = {
+  callback: (
+    data: {
+      active: boolean;
+      items: (SidebarItem | SidebarGroupItem)[] | null;
+      name: string;
+    }[]
+  ) => void;
+};
+
 const sidebar = {
-  setItems: function (params: any) {
+  setItems: function (params: SidebarSetParams) {
     addCommand('median://sidebar/setItems', params);
   },
-  getItems: function (params: any) {
+  getItems: function (params: SidebarGetParams) {
     return addCommandCallback('median://sidebar/getItems', params);
   },
 };
 
 const statusbar = {
-  set: function (params: any) {
+  set: function (params: { style: 'auto' | 'light' | 'dark'; color: string; overlay: boolean; blur: boolean }) {
     addCommand('median://statusbar/set', params);
   },
-  matchBodyBackgroundColor: function (params: any) {
+  matchBodyBackgroundColor: function (params: { active: boolean }) {
     addCommand('median://statusbar/matchBodyBackgroundColor', params);
   },
+};
+
+type TabNavigationSetParams = {
+  enabled: boolean;
+  items?: {
+    icon: string;
+    label?: string;
+    url: string;
+  };
 };
 
 const tabNavigation = {
@@ -198,14 +266,8 @@ const tabNavigation = {
   deselect: function () {
     addCommand('median://tabs/deselect');
   },
-  setTabs: function (tabs: any) {
+  setTabs: function (tabs: TabNavigationSetParams) {
     addCommand('median://tabs/setTabs', { tabs });
-  },
-};
-
-const webconsolelogs = {
-  print: function (params: any) {
-    addCommand('median://webconsolelogs/print', params);
   },
 };
 
@@ -222,8 +284,8 @@ const webview = {
 };
 
 const window = {
-  open: function (urlString: string) {
-    addCommand('median://window/open', { url: urlString });
+  open: function (url: string) {
+    addCommand('median://window/open', { url });
   },
   close: function () {
     addCommand('median://window/close');
@@ -249,7 +311,6 @@ export {
   sidebar,
   statusbar,
   tabNavigation,
-  webconsolelogs,
   webview,
   window,
 };
