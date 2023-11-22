@@ -1,59 +1,13 @@
-import {
-  admob,
-  appreview,
-  appsflyer,
-  auth,
-  auth0,
-  autorefresh,
-  backgroundLocation,
-  backgroundMedia,
-  barcode,
-  beacon,
-  braze,
-  card_io,
-  contacts,
-  cordial,
-  documentScanner,
-  downloads,
-  esmiley,
-  facebook,
-  firebaseAnalytics,
-  haptics,
-  iap,
-  intercom,
-  kaltura,
-  localpreferences,
-  modal,
-  moengage,
-  moxo,
-  nativebridge,
-  onesignal,
-  opentok,
-  permissions,
-  plaid,
-  purchase,
-  socialLogin,
-  storage,
-  twilio,
-} from './plugin';
-
-declare global {
-  interface Window {
-    webkit?: {
-      messageHandlers?: {
-        JSBridge?: any;
-      };
-    };
-  }
-}
+import * as plugins from './plugin';
+import { general, ios, android } from './commands';
 
 class Median {
   isNativeApp = () => {
-    return !!window?.webkit?.messageHandlers?.JSBridge;
+    return !!window?.webkit?.messageHandlers?.JSBridge || !!window?.JSBridge;
   };
 
-  #onReadyCallback?: Function;
-  onReady = (callback: Function) => {
+  #onReadyCallback?: () => void;
+  onReady = (callback: () => void) => {
     if (typeof callback === 'function') {
       this.#onReadyCallback = callback;
       let counter = 0;
@@ -73,42 +27,68 @@ class Median {
     }
   };
 
-  admob = admob;
-  appreview = appreview;
-  appsflyer = appsflyer;
-  auth = auth;
-  auth0 = auth0;
-  autorefresh = autorefresh;
-  backgroundLocation = backgroundLocation;
-  backgroundMedia = backgroundMedia;
-  barcode = barcode;
-  beacon = beacon;
-  braze = braze;
-  card_io = card_io;
-  contacts = contacts;
-  cordial = cordial;
-  documentScanner = documentScanner;
-  downloads = downloads;
-  esmiley = esmiley;
-  facebook = facebook;
-  firebaseAnalytics = firebaseAnalytics;
-  haptics = haptics;
-  iap = iap;
-  intercom = intercom;
-  kaltura = kaltura;
-  localpreferences = localpreferences;
-  modal = modal;
-  moengage = moengage;
-  moxo = moxo;
-  nativebridge = nativebridge;
-  onesignal = onesignal;
-  opentok = opentok;
-  permissions = permissions;
-  plaid = plaid;
-  purchase = purchase;
-  socialLogin = socialLogin;
-  storage = storage;
-  twilio = twilio;
+  ios = ios;
+  android = android;
+
+  // General
+  clipboard = general.clipboard;
+  config = general.config;
+  connectivity = general.connectivity;
+  deviceInfo = general.deviceInfo;
+  internalExternal = general.internalExternal;
+  keyboard = general.keyboard;
+  nativebridge = general.nativebridge;
+  navigationLevels = general.navigationLevels;
+  navigationMaxWindows = general.navigationMaxWindows;
+  navigationTitles = general.navigationTitles;
+  open = general.open;
+  registration = general.registration;
+  run = general.run;
+  screen = general.screen;
+  share = general.share;
+  sidebar = general.sidebar;
+  statusbar = general.statusbar;
+  tabNavigation = general.tabNavigation;
+  webconsolelogs = general.webconsolelogs;
+  webview = general.webview;
+  window = general.window;
+
+  // Plugins
+  admob = plugins.admob;
+  appreview = plugins.appreview;
+  appsflyer = plugins.appsflyer;
+  auth = plugins.auth;
+  auth0 = plugins.auth0;
+  autorefresh = plugins.autorefresh;
+  backgroundLocation = plugins.backgroundLocation;
+  backgroundMedia = plugins.backgroundMedia;
+  barcode = plugins.barcode;
+  beacon = plugins.beacon;
+  braze = plugins.braze;
+  card_io = plugins.card_io;
+  contacts = plugins.contacts;
+  cordial = plugins.cordial;
+  documentScanner = plugins.documentScanner;
+  downloads = plugins.downloads;
+  esmiley = plugins.esmiley;
+  facebook = plugins.facebook;
+  firebaseAnalytics = plugins.firebaseAnalytics;
+  haptics = plugins.haptics;
+  iap = plugins.iap;
+  intercom = plugins.intercom;
+  kaltura = plugins.kaltura;
+  localpreferences = plugins.localpreferences;
+  modal = plugins.modal;
+  moengage = plugins.moengage;
+  moxo = plugins.moxo;
+  onesignal = plugins.onesignal;
+  opentok = plugins.opentok;
+  permissions = plugins.permissions;
+  plaid = plugins.plaid;
+  purchase = plugins.purchase;
+  socialLogin = plugins.socialLogin;
+  storage = plugins.storage;
+  twilio = plugins.twilio;
 }
 
 export default new Median();

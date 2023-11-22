@@ -1,4 +1,4 @@
-import { addCommand } from '../utilities';
+import { addCommand } from '../utils';
 
 const autorefresh = {
   set: function (params: any) {

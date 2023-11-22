@@ -1,4 +1,4 @@
-import { addCommand } from '../utilities';
+import { addCommand } from '../utils';
 
 const backgroundLocation = {
   start: function (params: any) {
