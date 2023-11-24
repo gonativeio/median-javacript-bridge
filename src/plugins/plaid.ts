@@ -1,11 +1,19 @@
+import { CallbackParams } from '../types';
 import { addCommandCallback } from '../utils';
 
+type PlaidLinkBankResult = {
+  success: boolean;
+  error?: string;
+  linkSessionID: string;
+  publicToken?: string;
+};
+
 const plaid = {
-  linkBank: function (params: any) {
-    return addCommandCallback('median://plaid/linkBank', params);
+  linkBank: function (params: CallbackParams<PlaidLinkBankResult> & { linkToken: string }) {
+    return addCommandCallback<PlaidLinkBankResult>('median://plaid/linkBank', params);
   },
-  verifyIdentity: function (params: any) {
-    return addCommandCallback('median://plaid/verifyIdentity', params);
+  verifyIdentity: function (params: CallbackParams<PlaidLinkBankResult> & { linkToken: string }) {
+    return addCommandCallback<PlaidLinkBankResult>('median://plaid/verifyIdentity', params);
   },
 };
 

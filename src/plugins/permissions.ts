@@ -1,10 +1,12 @@
+import { CallbackParams } from '../types';
 import { addCommand, addCommandCallback } from '../utils';
 
 const permissions = {
-  requestPhoneCallMgmt: function (params: any) {
+  requestPhoneCallMgmt: function (params: CallbackParams) {
     if (params.callback) {
       return addCommandCallback('median://permissions/requestPhoneCallMgmt', params);
-    } else addCommand('median://permissions/requestPhoneCallMgmt', params);
+    }
+    addCommand('median://permissions/requestPhoneCallMgmt', params);
   },
 };
 

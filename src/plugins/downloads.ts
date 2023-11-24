@@ -1,10 +1,27 @@
+import { CallbackParams } from '../types';
 import { addCommand, addCommandCallback } from '../utils';
 
+type DownloadStatus = {
+  identifier?: string;
+  event?: 'progress' | 'done' | 'error';
+  bytesWritten?: number;
+  expectedBytes?: number;
+  errorMessage?: string;
+};
+
+type DownloadFileParams = {
+  url: string;
+  title: string;
+  identifier?: string;
+  details?: string;
+  data?: string;
+};
+
 const downloads = {
-  init: function (params: any) {
+  init: function (params: CallbackParams<DownloadStatus>) {
     return addCommandCallback('median://downloads/init', params);
   },
-  downloadFile: function (params: any) {
+  downloadFile: function (params: DownloadFileParams) {
     addCommand('median://downloads/downloadFile', params);
   },
   showUI: function () {

@@ -1,11 +1,8 @@
+import { CallbackParams } from '../types';
 import { addCommand, addCommandCallback } from '../utils';
 
-type AppReviewPromptParams = {
-  callback: () => void;
-};
-
 const appreview = {
-  prompt: function (params?: AppReviewPromptParams) {
+  prompt: function (params?: CallbackParams) {
     if (params) {
       return addCommandCallback('median://appReview/prompt', params);
     }

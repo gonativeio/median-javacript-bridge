@@ -1,15 +1,37 @@
+import { CallbackParams } from '../types';
 import { addCommand, addCommandCallback } from '../utils';
 
+type BackgroundMediaTrack = {
+  url?: string;
+  title?: string;
+  album?: string;
+  artist?: string;
+  time?: number;
+};
+
+type BackgroundMediaStreamPlaylistParams = {
+  currentTrackNumber: number;
+  tracks: BackgroundMediaTrack[];
+};
+
+type BackgroundMediaPlayerStatusResult = {
+  currentTime: number;
+  isPaused: boolean;
+  album: string;
+  artist: string;
+  title: string;
+  artwork: string;
+  url: string;
+};
+
 const backgroundMedia = {
-  playTrack: function (params: any) {
+  playTrack: function (params: BackgroundMediaTrack | number) {
     if (typeof params === 'number') {
-      params = {
-        time: params,
-      };
+      params = { time: params };
     }
     addCommand('median://backgroundMedia/playTrack', params);
   },
-  streamPlaylist: function (params: any) {
+  streamPlaylist: function (params: BackgroundMediaStreamPlaylistParams) {
     addCommand('median://backgroundMedia/streamPlaylist', params);
   },
   pause: function () {
@@ -24,8 +46,8 @@ const backgroundMedia = {
   resume: function () {
     addCommand('median://backgroundMedia/resume');
   },
-  getPlayerStatus: function (params: any) {
-    return addCommandCallback('median://backgroundMedia/getPlayerStatus', params);
+  getPlayerStatus: function (params: CallbackParams<BackgroundMediaPlayerStatusResult>) {
+    return addCommandCallback<BackgroundMediaPlayerStatusResult>('median://backgroundMedia/getPlayerStatus', params);
   },
 };
 

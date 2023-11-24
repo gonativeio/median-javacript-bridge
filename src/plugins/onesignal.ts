@@ -1,4 +1,34 @@
+import { CallbackData, CallbackParams } from '../types';
 import { addCommand, addCommandCallback } from '../utils';
+
+type OneSignalInfo = {
+  oneSignalUserId: string;
+  oneSignalPushToken: string;
+  oneSignalSubscribed: boolean;
+  oneSignalRequiresUserPrivacyConsent: boolean;
+  platform: string;
+  appId: string;
+  appVersion: string;
+  distribution: string;
+  hardware: string;
+  installationId: string;
+  language: string;
+  model: string;
+  os: string;
+  osVersion: string;
+  timeZone: string;
+} & Record<string, string | boolean | number>;
+
+type OneSignalGetTagsResult = CallbackData & {
+  tags: Record<string, string>;
+};
+
+type OneSignalInAppMessageData = {
+  clickName: string;
+  clickUrl: string;
+  firstClick: string;
+  closesMessage: string;
+};
 
 const onesignal = {
   run: {
@@ -6,8 +36,8 @@ const onesignal = {
       addCommand('median://run/gonative_onesignal_info');
     },
   },
-  onesignalInfo: function (params: any) {
-    return addCommandCallback('median://run/gonative_onesignal_info', params, true);
+  onesignalInfo: function (params: CallbackParams<OneSignalInfo>) {
+    return addCommandCallback<OneSignalInfo>('median://run/gonative_onesignal_info', params, true);
   },
   register: function () {
     addCommand('median://onesignal/register');
@@ -21,13 +51,13 @@ const onesignal = {
     },
   },
   tags: {
-    getTags: function (params: any) {
-      return addCommandCallback('median://onesignal/tags/get', params);
+    getTags: function (params: CallbackParams<OneSignalGetTagsResult>) {
+      return addCommandCallback<OneSignalGetTagsResult>('median://onesignal/tags/get', params);
     },
-    setTags: function (params: any) {
+    setTags: function (params: CallbackParams<CallbackData> & { tags: Record<string, string> }) {
       addCommand('median://onesignal/tags/set', params);
     },
-    deleteTags: function (params: any) {
+    deleteTags: function (params: CallbackParams<CallbackData> & { tags?: string[] }) {
       addCommand('median://onesignal/tags/delete', params);
     },
   },
@@ -38,24 +68,17 @@ const onesignal = {
     addCommand('median://onesignal/promptLocation');
   },
   iam: {
-    addTrigger: function (triggers: any) {
-      if (triggers) {
-        const keyLocal = Object.keys(triggers)[0];
-        const params = {
-          key: keyLocal,
-          value: triggers[keyLocal],
-        };
-        addCommand('median://onesignal/iam/addTrigger', params);
-      }
+    addTrigger: function (params: { key: string; value: string }) {
+      addCommand('median://onesignal/iam/addTrigger', params);
     },
-    addTriggers: function (params: any) {
+    addTriggers: function (params: Record<string, string>) {
       addCommand('median://onesignal/iam/addTriggers', params);
     },
-    removeTriggerForKey: function (key: any) {
+    removeTriggerForKey: function (key: string) {
       const params = { key: key };
       addCommand('median://onesignal/iam/removeTriggerForKey', params);
     },
-    getTriggerValueForKey: function (key: any) {
+    getTriggerValueForKey: function (key: string) {
       const params = { key: key };
       addCommand('median://onesignal/iam/getTriggerValueForKey', params);
     },
@@ -65,23 +88,20 @@ const onesignal = {
     resumeInAppMessages: function () {
       addCommand('median://onesignal/iam/pauseInAppMessages?pause=false');
     },
-    setInAppMessageClickHandler: function (handler: any) {
-      const params = { handler: handler };
-      addCommand('median://onesignal/iam/setInAppMessageClickHandler', params);
+    setInAppMessageClickHandler: function (handler: (data: OneSignalInAppMessageData) => void) {
+      addCommand('median://onesignal/iam/setInAppMessageClickHandler', { handler });
     },
   },
   externalUserId: {
-    set: function (params: any) {
+    set: function (params: { externalId: string | number }) {
       addCommand('median://onesignal/externalUserId/set', params);
     },
     remove: function () {
       addCommand('median://onesignal/externalUserId/remove');
     },
   },
-  enableForegroundNotifications: function (enabled: any) {
-    addCommand('median://onesignal/enableForegroundNotifications', {
-      enabled,
-    });
+  enableForegroundNotifications: function (enabled: boolean) {
+    addCommand('median://onesignal/enableForegroundNotifications', { enabled });
   },
 };
 

@@ -1,12 +1,20 @@
+import { CallbackParams } from '../types';
 import { addCommand, addCommandCallback } from '../utils';
 
+type DocumentScannerScanResult = {
+  image: string;
+  mimeType: string;
+  encoding: string;
+};
+
 const documentScanner = {
-  scanPage: function (params: any) {
+  scanPage: function (params: CallbackParams<DocumentScannerScanResult>) {
     if (params.callback) {
       return addCommandCallback('median://documentScanner/scanPage', params);
-    } else addCommand('median://documentScanner/scanPage', params);
+    }
+    addCommand('median://documentScanner/scanPage', params);
   },
-  init: function (params: any) {
+  init: function (params: CallbackParams<DocumentScannerScanResult>) {
     addCommand('median://documentScanner/scanPage', params);
   },
 };

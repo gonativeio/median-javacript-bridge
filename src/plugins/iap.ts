@@ -1,12 +1,36 @@
+import { AnyData } from '../types';
 import { addCommand, addCommandCallback } from '../utils';
 
+type InAppPurchaseParams = Record<string, AnyData> & {
+  productID: string | null;
+  offerToken?: string;
+  previousProductID?: string;
+  prorationMode?: string;
+  replacementMode?: string;
+};
+
+type InAppPurchaseResult = Record<string, AnyData> & {
+  platform: string;
+  allPurchases: AnyData[];
+};
+
+type InAppPurchaseInfoResult = {
+  inAppPurchases: Record<string, AnyData> & {
+    platform: string;
+    products: (Record<string, AnyData> & {
+      productID: string;
+      price: string;
+    })[];
+  };
+};
+
 const iap = {
-  purchase: function (params: any) {
-    const productID = params.productID;
+  purchase: function (params: InAppPurchaseParams) {
+    const productId = params.productID;
     params.productID = null;
-    return addCommandCallback('median://purchase/' + productID, params);
+    return addCommandCallback<InAppPurchaseResult>('median://purchase/' + productId, params);
   },
-  manageSubscription: function (params: any) {
+  manageSubscription: function (params: { productID: string }) {
     addCommand('median://iap/manageSubscription', params);
   },
   manageAllSubscriptions: function () {
@@ -16,7 +40,7 @@ const iap = {
     addCommand('median://iap/restorePurchases');
   },
   info: function () {
-    return addCommandCallback('median://iap/info');
+    return addCommandCallback<InAppPurchaseInfoResult>('median://iap/info');
   },
   refresh: function () {
     addCommand('median://iap/refresh');

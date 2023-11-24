@@ -1,4 +1,4 @@
-import { AnyData, DefaultResponse } from '../types';
+import { AnyData, CallbackParams, CallbackData } from '../types';
 import { addCommand, addCommandCallback } from '../utils';
 
 type Auth0LoginUniveralResult = {
@@ -12,23 +12,15 @@ type Auth0LoginUniveralParams = {
   enableBiometrics?: boolean;
 };
 
-type Auth0LogoutParams = {
-  callback?: (data: { error?: string }) => void;
-};
-
-type Auth0StatusReponse = { biometryType: string; hasTouchId: boolean; hasSecret: boolean };
-
-type Auth0StatusParams = {
-  callback?: (data: Auth0StatusReponse) => void;
-};
+type AuthStatusResult = { biometryType: string; hasTouchId: boolean; hasSecret: boolean };
 
 type Auth0SaveParams = {
-  callback?: (data: DefaultResponse) => void;
+  callback?: (data: CallbackData) => void;
   secret: string;
 };
 
 type Auth0GetParams = {
-  callback?: (data: DefaultResponse & { secret?: string }) => void;
+  callback?: (data: { success: boolean; error?: string; secret?: string }) => void;
   prompt?: string;
 };
 
@@ -38,7 +30,7 @@ type Auth0ProfileParams = {
 };
 
 type Auth0DeleteParams = {
-  callback?: (data: DefaultResponse & { secret?: string }) => void;
+  callback?: (data: { success: boolean; error?: string; secret?: string }) => void;
   prompt?: string;
 };
 
@@ -46,11 +38,11 @@ const auth0 = {
   loginUniversal: function (params: Auth0LoginUniveralParams) {
     addCommand('median://auth0/loginUniversal', params);
   },
-  logout: function (params: Auth0LogoutParams) {
+  logout: function (params: CallbackParams<{ error?: string }>) {
     addCommand('median://auth0/logout', params);
   },
-  status: function (params: Auth0StatusParams) {
-    return addCommandCallback<Auth0StatusParams>('median://auth0/status', params);
+  status: function (params: CallbackParams<AuthStatusResult>) {
+    return addCommandCallback<AuthStatusResult>('median://auth0/status', params);
   },
   save: function (params: Auth0SaveParams) {
     if (typeof params.secret !== 'string') {

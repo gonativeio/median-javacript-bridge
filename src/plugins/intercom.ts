@@ -1,26 +1,42 @@
+import { AnyData, CallbackParams } from '../types';
 import { addCommand, addCommandCallback } from '../utils';
 
+type IntercomUpdateUserParams = {
+  userId?: string;
+  name?: string;
+  email?: string;
+  phoneNumber?: string;
+};
+
+type IntercomNotificationResult = { granted: boolean };
+
+type IntercomNotificationParams = CallbackParams<IntercomNotificationResult>;
+
+type IntercomLogEventParams = Record<string, AnyData> & {
+  eventName: string;
+};
+
 const intercom = {
-  registerPush: function (params: any) {
-    return addCommandCallback('median://intercom/registerPush', params);
+  registerPush: function (params: IntercomNotificationParams) {
+    return addCommandCallback<IntercomNotificationResult>('median://intercom/registerPush', params);
   },
-  updateUser: function (params: any) {
+  updateUser: function (params: IntercomUpdateUserParams) {
     addCommand('median://intercom/updateUser', params);
   },
-  logEvent: function (params: any) {
+  logEvent: function (params: IntercomLogEventParams) {
     addCommand('median://intercom/logEvent', params);
   },
   logout: function () {
     addCommand('median://intercom/logout');
   },
-  presentCarousel: function (params: any) {
+  presentCarousel: function (params: { carouselID: string }) {
     addCommand('median://intercom/presentCarousel', params);
   },
-  permissionStatus: function (params: any) {
-    return addCommandCallback('median://intercom/permissionStatus', params, true);
+  permissionStatus: function (params: IntercomNotificationParams) {
+    return addCommandCallback<IntercomNotificationResult>('median://intercom/permissionStatus', params, true);
   },
-  requestPermission: function (params: any) {
-    return addCommandCallback('median://intercom/registerPush', params, true);
+  requestPermission: function (params: IntercomNotificationParams) {
+    return addCommandCallback<IntercomNotificationResult>('median://intercom/registerPush', params, true);
   },
 };
 

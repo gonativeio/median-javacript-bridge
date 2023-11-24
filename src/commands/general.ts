@@ -1,15 +1,13 @@
-import { AnyData, DeviceInfo, KeyboardInfo } from '../types';
+import { AnyData, CallbackParams } from '../types';
 import { addCommand, addCommandCallback } from '../utils';
 
 type ClipboardResult = { data: string };
-
-type ClipboardGetParams = { callback: (result: ClipboardResult) => void };
 
 const clipboard = {
   set: function (params: ClipboardResult) {
     addCommand('median://clipboard/set', params);
   },
-  get: function (params: ClipboardGetParams) {
+  get: function (params: CallbackParams<ClipboardResult>) {
     return addCommandCallback<ClipboardResult>('median://clipboard/get', params);
   },
 };
@@ -22,13 +20,11 @@ const config = {
 
 type ConnectivityResult = { connected: number; type: string };
 
-type ConnectivityParams = { callback: (data: ConnectivityResult) => void };
-
 const connectivity = {
-  get: function (params: ConnectivityParams) {
+  get: function (params: CallbackParams<ConnectivityResult>) {
     return addCommandCallback<ConnectivityResult>('median://connectivity/get', params);
   },
-  subscribe: function (params: ConnectivityParams) {
+  subscribe: function (params: CallbackParams<ConnectivityResult>) {
     return addCommandCallback<ConnectivityResult>('median://connectivity/subscribe', params, true);
   },
   unsubscribe: function () {
@@ -36,9 +32,26 @@ const connectivity = {
   },
 };
 
-export type DeviceInfoParams = { callback: (data: DeviceInfo) => void };
+export type DeviceInfo = {
+  platform: 'ios' | 'android';
+  appId: string;
+  appVersion: string;
+  appBuild: string;
+  carrierNames: string[];
+  distribution: string;
+  hardware: string;
+  installationId: string;
+  apnsToken?: string;
+  fcmToken?: string;
+  language: string;
+  model: string;
+  os: string;
+  osVersion: string;
+  timeZone: string;
+  isFirstLaunch: boolean;
+} & Record<string, string | boolean | number>;
 
-const deviceInfo = function (params: DeviceInfoParams) {
+const deviceInfo = function (params: CallbackParams<DeviceInfo>) {
   return addCommandCallback<DeviceInfo>('median://run/median_device_info', params, true);
 };
 
@@ -56,10 +69,20 @@ const internalExternal = {
   },
 };
 
-type KeyboardInfoParams = { callback: (data: KeyboardInfo) => void };
+export type KeyboardInfo = {
+  visible: boolean;
+  keyboardWindowSize: {
+    width: number;
+    height: number;
+  };
+  visibleWindowSize: {
+    width: number;
+    height: number;
+  };
+};
 
 const keyboard = {
-  info: function (params: KeyboardInfoParams) {
+  info: function (params: CallbackParams<KeyboardInfo>) {
     return addCommandCallback<KeyboardInfo>('median://keyboard/info', params);
   },
   listen: function (callback: (data: KeyboardInfo) => void) {
@@ -70,12 +93,10 @@ const keyboard = {
   },
 };
 
-type NativeBridgeCustomParams<T = AnyData> = AnyData & { callback: (data: T) => void };
-
 type NativeBridgeMultiParams = { data: { urls: string[] } };
 
 const nativebridge = {
-  custom: function (params: NativeBridgeCustomParams) {
+  custom: function (params: AnyData) {
     return addCommandCallback('median://nativebridge/custom', params);
   },
   multi: function (params: NativeBridgeMultiParams) {
@@ -232,15 +253,11 @@ type SidebarGetResult = {
   name: string;
 }[];
 
-type SidebarGetParams = {
-  callback: (data: SidebarGetResult) => void;
-};
-
 const sidebar = {
   setItems: function (params: SidebarSetParams) {
     addCommand('median://sidebar/setItems', params);
   },
-  getItems: function (params: SidebarGetParams) {
+  getItems: function (params: CallbackParams<SidebarGetResult>) {
     return addCommandCallback<SidebarGetResult>('median://sidebar/getItems', params);
   },
 };

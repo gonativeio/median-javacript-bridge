@@ -1,21 +1,24 @@
+import { AnyData, CallbackData, CallbackParams } from '../types';
 import { addCommand, addCommandCallback } from '../utils';
 
+type BrazeChangeUserParams = CallbackParams<CallbackData> & { userId: string };
+
+type BrazeNotificationResult = { granted: boolean };
+
+type BrazeNotificationParams = CallbackParams<BrazeNotificationResult>;
+
 const braze = {
-  changeUser: function (params: any) {
-    return addCommandCallback('median://braze/changeUser', params, true);
+  changeUser: function (params: BrazeChangeUserParams) {
+    return addCommandCallback<CallbackData>('median://braze/changeUser', params, true);
   },
-  notificationEnabled: function (params: any) {
-    return addCommandCallback('median://braze/notificationEnabled', params, true);
+  notificationEnabled: function (params: BrazeNotificationParams) {
+    return addCommandCallback<BrazeNotificationResult>('median://braze/notificationEnabled', params, true);
   },
-  promptNotification: function (params: any) {
-    return addCommandCallback('median://braze/promptNotification', params, true);
+  promptNotification: function (params: BrazeNotificationParams) {
+    return addCommandCallback<BrazeNotificationResult>('median://braze/promptNotification', params, true);
   },
-  logCustomEvent: function (eventName: any, data: any) {
-    const params = {
-      eventName: eventName,
-      data: data,
-    };
-    addCommand('median://braze/logCustomEvent', params);
+  logCustomEvent: function (eventName: string, data: Record<string, AnyData>) {
+    addCommand('median://braze/logCustomEvent', { eventName, data });
   },
 };
 

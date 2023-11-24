@@ -84,9 +84,13 @@ class Median {
   opentok = plugins.opentok;
   permissions = plugins.permissions;
   plaid = plugins.plaid;
-  purchase = plugins.purchase;
+  purchase = plugins.iap.purchase;
   socialLogin = plugins.socialLogin;
-  storage = plugins.storage;
+  storage = {
+    app: plugins.localpreferences.nonpersistent,
+    cloud: plugins.localpreferences.persistent,
+    filesystem: plugins.localpreferences.filesystem,
+  };
   twilio = plugins.twilio;
 }
 
