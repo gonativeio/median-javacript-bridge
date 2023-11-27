@@ -1,33 +1,73 @@
 import * as plugins from './plugins';
-import { general, ios, android } from './commands';
+import { android, app, general, ios } from './commands';
+import { AnyData, AddListenerType, ListenersType, CallbacksType, AddCallbackType } from './types';
 
 class Median {
-  isNativeApp = () => {
-    return !!window?.webkit?.messageHandlers?.JSBridge || !!window?.JSBridge;
+  // Utils
+  #listeners: ListenersType = {};
+  #callbacks: CallbacksType = {};
+
+  #setGlobalListener = (functionName: AnyData, callbackFunctions: Record<string, (...data: AnyData) => void>) => {
+    (window[functionName] as AnyData) = function (...args: AnyData) {
+      Object.keys(callbackFunctions).forEach((key) => {
+        const callbackFunction = callbackFunctions[key];
+        if (typeof callbackFunction === 'function') {
+          callbackFunction(...args);
+        }
+      });
+    };
   };
 
-  #onReadyCallback?: () => void;
-  onReady = (callback: () => void) => {
-    if (typeof callback === 'function') {
-      this.#onReadyCallback = callback;
-      let counter = 0;
+  #addListener: AddListenerType = (callback, functionName) => {
+    const functionId = `${functionName}_${Math.random().toString(36).slice(2)}`;
 
-      const intervalFunction = setInterval(() => {
-        counter += 1;
-
-        if (this.isNativeApp() && this.#onReadyCallback) {
-          this.#onReadyCallback();
-          this.#onReadyCallback = undefined;
-        }
-
-        if (counter >= 50 || !this.#onReadyCallback) {
-          clearInterval(intervalFunction);
-        }
-      }, 100);
+    if (typeof callback !== 'function') {
+      return functionId;
     }
+
+    this.#listeners[functionName] = this.#listeners[functionName] || {};
+    const callbackFunctions = this.#listeners[functionName];
+    callbackFunctions[functionId] = callback;
+
+    this.#setGlobalListener(functionName, callbackFunctions);
+
+    return functionId;
   };
 
+  #removeListener = (functionName: string, functionId: string) => {
+    if (!functionName || !functionId) {
+      return;
+    }
+
+    this.#listeners[functionName] = this.#listeners[functionName] || {};
+    const callbackFunctions = this.#listeners[functionName];
+    delete callbackFunctions[functionId];
+
+    this.#setGlobalListener(functionName, callbackFunctions);
+  };
+
+  #addCallback: AddCallbackType = (callback, functionName) => {
+    if (typeof callback !== 'function') {
+      return;
+    }
+
+    this.#callbacks[functionName] = this.#callbacks[functionName] || [];
+    const callbackFunctions = this.#callbacks[functionName];
+    callbackFunctions.push(callback);
+
+    (window[functionName as AnyData] as AnyData) = function (...args: AnyData) {
+      callbackFunctions.forEach((callbackFunction) => {
+        if (typeof callbackFunction === 'function') {
+          callbackFunction(...args);
+        }
+      });
+    };
+  };
+
+  // iOS
   ios = ios;
+
+  // Android
   android = android;
 
   // General
@@ -72,7 +112,7 @@ class Median {
   esmiley = plugins.esmiley;
   facebook = plugins.facebook;
   firebaseAnalytics = plugins.firebaseAnalytics;
-  haptics = plugins.haptics;
+  haptics = plugins.haptics.haptics;
   iap = plugins.iap;
   intercom = plugins.intercom;
   kaltura = plugins.kaltura;
@@ -92,6 +132,42 @@ class Median {
     filesystem: plugins.localpreferences.filesystem,
   };
   twilio = plugins.twilio;
+
+  // Functions
+  isNativeApp = () => {
+    return !!window?.webkit?.messageHandlers?.JSBridge || !!window?.JSBridge;
+  };
+
+  // median_library_ready
+  onReady = (callback: () => void) => {
+    if (typeof callback === 'function') {
+      let callbackFunction: (() => void) | null = callback;
+      let counter = 0;
+
+      const intervalFunction = setInterval(() => {
+        if (this.isNativeApp() && callbackFunction) {
+          callbackFunction();
+          callbackFunction = null;
+          return;
+        }
+
+        counter += 1;
+        if (counter >= 20 || !callbackFunction) {
+          clearInterval(intervalFunction);
+          return;
+        }
+      }, 500);
+    }
+  };
+
+  // median_app_resumed
+  appResumed = app.appResumed(this.#addListener, this.#removeListener);
+
+  // median_device_shake
+  deviceShake = plugins.haptics.deviceShake(this.#addListener, this.#removeListener);
+
+  // median_share_to_app
+  shareToApp = plugins.share.shareToApp(this.#addCallback);
 }
 
 export default new Median();

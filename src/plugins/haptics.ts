@@ -1,3 +1,4 @@
+import { AddListenerType, RemoveListenerType } from '../types';
 import { addCommand } from '../utils';
 
 type HapticsTriggerParams = {
@@ -19,4 +20,15 @@ const haptics = {
   },
 };
 
-export default haptics;
+const deviceShake = function (addListener: AddListenerType, removeListener: RemoveListenerType) {
+  return {
+    addListener: function (callback: () => void) {
+      return addListener(callback, '_median_device_shake');
+    },
+    removeListener: function (functionId: string) {
+      return removeListener('_median_device_shake', functionId);
+    },
+  };
+};
+
+export { haptics, deviceShake };
