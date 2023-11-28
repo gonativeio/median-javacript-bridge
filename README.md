@@ -40,9 +40,11 @@ OR
 ### Share into app plugin
 [Documentation](https://median.co/docs/share-into-app)
 
-    Median.shareToApp.setCallback((data) => {
+    const listenerId = Median.shareToApp.addListener((data) => {
         console.log(data.url, data.subject);
     });
+
+    Median.shareToApp.removeListener(listenerId);
 
 ### Haptics plugin
 [Documentation](https://median.co/docs/haptics)
