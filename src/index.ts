@@ -1,13 +1,11 @@
 import * as plugins from './plugins';
-import { android, app, general, ios } from './commands';
-import { AnyData, AddListenerType, ListenersType, CallbacksType, AddCallbackType } from './types';
+import { android, general, ios } from './commands';
+import { AnyData } from './types';
 
 class Median {
-  // Utils
-  #listeners: ListenersType = {};
-  #callbacks: CallbacksType = {};
+  #listeners: Record<string, Record<string, (...args: AnyData) => void>> = {};
 
-  #setGlobalListener = (functionName: AnyData, callbackFunctions: Record<string, (...data: AnyData) => void>) => {
+  #updateGlobalListener = (functionName: AnyData, callbackFunctions: Record<string, (...args: AnyData) => void>) => {
     (window[functionName] as AnyData) = function (...args: AnyData) {
       Object.keys(callbackFunctions).forEach((key) => {
         const callbackFunction = callbackFunctions[key];
@@ -18,7 +16,7 @@ class Median {
     };
   };
 
-  #addListener: AddListenerType = (callback, functionName) => {
+  #addListener = <T>(functionName: string, callback: (data: T) => void) => {
     const functionId = `${functionName}_${Math.random().toString(36).slice(2)}`;
 
     if (typeof callback !== 'function') {
@@ -29,7 +27,7 @@ class Median {
     const callbackFunctions = this.#listeners[functionName];
     callbackFunctions[functionId] = callback;
 
-    this.#setGlobalListener(functionName, callbackFunctions);
+    this.#updateGlobalListener(functionName, callbackFunctions);
 
     return functionId;
   };
@@ -43,24 +41,17 @@ class Median {
     const callbackFunctions = this.#listeners[functionName];
     delete callbackFunctions[functionId];
 
-    this.#setGlobalListener(functionName, callbackFunctions);
+    this.#updateGlobalListener(functionName, callbackFunctions);
   };
 
-  #addCallback: AddCallbackType = (callback, functionName) => {
-    if (typeof callback !== 'function') {
-      return;
-    }
-
-    this.#callbacks[functionName] = this.#callbacks[functionName] || [];
-    const callbackFunctions = this.#callbacks[functionName];
-    callbackFunctions.push(callback);
-
-    (window[functionName as AnyData] as AnyData) = function (...args: AnyData) {
-      callbackFunctions.forEach((callbackFunction) => {
-        if (typeof callbackFunction === 'function') {
-          callbackFunction(...args);
-        }
-      });
+  #createListenerProp = <T = void>(functionName: string) => {
+    return {
+      addListener: (callback: (data: T) => void) => {
+        return this.#addListener<T>(functionName, callback);
+      },
+      removeListener: (functionId: string) => {
+        return this.#removeListener(functionName, functionId);
+      },
     };
   };
 
@@ -112,7 +103,7 @@ class Median {
   esmiley = plugins.esmiley;
   facebook = plugins.facebook;
   firebaseAnalytics = plugins.firebaseAnalytics;
-  haptics = plugins.haptics.haptics;
+  haptics = plugins.haptics;
   iap = plugins.iap;
   intercom = plugins.intercom;
   kaltura = plugins.kaltura;
@@ -133,7 +124,6 @@ class Median {
   };
   twilio = plugins.twilio;
 
-  // Functions
   isNativeApp = () => {
     return !!window?.webkit?.messageHandlers?.JSBridge || !!window?.JSBridge;
   };
@@ -161,13 +151,13 @@ class Median {
   };
 
   // median_app_resumed
-  appResumed = app.appResumed(this.#addListener, this.#removeListener);
+  appResumed = this.#createListenerProp('_median_app_resumed');
 
   // median_device_shake
-  deviceShake = plugins.haptics.deviceShake(this.#addListener, this.#removeListener);
+  deviceShake = this.#createListenerProp('_median_device_shake');
 
   // median_share_to_app
-  shareToApp = plugins.share.shareToApp(this.#addCallback);
+  shareToApp = this.#createListenerProp<plugins.share.ShareToAppData>('_median_share_to_app');
 }
 
 export default new Median();

@@ -17,7 +17,7 @@ export { default as downloads } from './downloads';
 export { default as esmiley } from './esmiley';
 export { default as facebook } from './facebook';
 export { default as firebaseAnalytics } from './firebaseAnalytics';
-export * as haptics from './haptics';
+export { default as haptics } from './haptics';
 export { default as iap } from './iap';
 export { default as intercom } from './intercom';
 export { default as kaltura } from './kaltura';
