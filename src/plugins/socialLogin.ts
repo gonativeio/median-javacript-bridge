@@ -1,7 +1,7 @@
 import { CallbackParams } from '../types';
 import { addCommand, addCommandCallback } from '../utils';
 
-type FacebookLoginResult = {
+type FacebookLoginData = {
   accessToken?: string;
   error?: string;
   state?: string;
@@ -10,13 +10,13 @@ type FacebookLoginResult = {
 };
 
 type FacebookLoginParams = {
-  callback?: (data: FacebookLoginResult) => void;
+  callback?: (data: FacebookLoginData) => void;
   redirectUri?: string;
   scope?: string;
   state?: string;
 };
 
-type GoogleSigninResult = {
+type GoogleSigninData = {
   error?: string;
   idToken?: string;
   state?: string;
@@ -24,12 +24,12 @@ type GoogleSigninResult = {
 };
 
 type GoogleSigninParams = {
-  callback?: (data: GoogleSigninResult) => void;
+  callback?: (data: GoogleSigninData) => void;
   redirectUri?: string;
   state?: string;
 };
 
-type AppleSigninResult = {
+type AppleSigninData = {
   code?: string;
   error?: string;
   idToken?: string;
@@ -40,7 +40,7 @@ type AppleSigninResult = {
 };
 
 type AppleSigninParams = {
-  callback?: (data: AppleSigninResult) => void;
+  callback?: (data: AppleSigninData) => void;
   redirectUri?: string;
   state?: string;
 };
@@ -49,7 +49,7 @@ const socialLogin = {
   facebook: {
     login: function (params: FacebookLoginParams) {
       if (params.callback) {
-        return addCommandCallback<FacebookLoginResult>('median://socialLogin/facebook/login', params);
+        return addCommandCallback<FacebookLoginData>('median://socialLogin/facebook/login', params);
       }
       addCommand('median://socialLogin/facebook/login', params);
     },
@@ -63,7 +63,7 @@ const socialLogin = {
   google: {
     login: function (params: GoogleSigninParams) {
       if (params.callback) {
-        return addCommandCallback<GoogleSigninResult>('median://socialLogin/google/login', params);
+        return addCommandCallback<GoogleSigninData>('median://socialLogin/google/login', params);
       }
       addCommand('median://socialLogin/google/login', params);
     },
@@ -77,7 +77,7 @@ const socialLogin = {
   apple: {
     login: function (params: AppleSigninParams) {
       if (params.callback) {
-        return addCommandCallback<AppleSigninResult>('median://socialLogin/apple/login', params);
+        return addCommandCallback<AppleSigninData>('median://socialLogin/apple/login', params);
       }
       addCommand('median://socialLogin/apple/login', params);
     },

@@ -15,12 +15,28 @@ declare global {
   }
 }
 
+export function createTempFunctionName(prefix = '_median_temp_') {
+  return prefix + Math.random().toString(36).slice(2);
+}
+
+export function setMedianCallback(command: string, callbackFunctions: Record<string, (...args: AnyData) => void>) {
+  (window[command as AnyData] as AnyData) = function (...args: AnyData) {
+    Object.keys(callbackFunctions).forEach((key) => {
+      const callbackFunction = callbackFunctions[key];
+      if (typeof callbackFunction === 'function') {
+        callbackFunction(...args);
+      }
+    });
+  };
+}
+
+// GoNativeJSBridgeLibrary.js
 export function addCallbackFunction(callbackFunction: string | ((data?: AnyData) => void), persistCallback?: boolean) {
   if (typeof callbackFunction === 'string') {
     return callbackFunction;
   }
 
-  const callbackName = '_median_temp_' + Math.random().toString(36).slice(2);
+  const callbackName = createTempFunctionName();
 
   (window[callbackName as AnyData] as AnyData) = function (...args: AnyData) {
     callbackFunction(...args);
@@ -67,7 +83,7 @@ export function addCommandCallback<T = AnyData>(
   if (params && params.callback) {
     addCommand(command, params, persistCallback);
   } else {
-    const tempFunctionName = '_median_temp_' + Math.random().toString(36).slice(2);
+    const tempFunctionName = createTempFunctionName();
 
     if (!params) {
       params = {};

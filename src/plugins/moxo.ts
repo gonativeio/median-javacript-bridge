@@ -1,35 +1,29 @@
-import { CallbackParams } from '../types';
+import { CallbackData, CallbackParams, PermissionStatusData } from '../types';
 import { addCommand, addCommandCallback } from '../utils';
 
-type MoxoResult = { success: boolean; error?: string };
-
-type MoxoNotificationResult = { granted: boolean };
-
-type MoxoNotificationParams = CallbackParams<MoxoNotificationResult>;
-
-type MoxoRegisterPushResult = { granted?: string; success?: boolean; error?: string };
+type MoxoRegisterPushData = { granted?: string; success?: boolean; error?: string };
 
 const moxo = {
-  login: function (params: CallbackParams<MoxoResult> & { accessToken: string }) {
-    return addCommandCallback<MoxoResult>('median://moxo/login', params, true);
+  login: function (params: CallbackParams<CallbackData> & { accessToken: string }) {
+    return addCommandCallback<CallbackData>('median://moxo/login', params, true);
   },
-  registerNotifications: function (params: CallbackParams<MoxoNotificationResult>) {
-    return addCommandCallback<MoxoRegisterPushResult>('median://moxo/registerNotifications', params, true);
+  registerNotifications: function (params: CallbackParams<PermissionStatusData>) {
+    return addCommandCallback<MoxoRegisterPushData>('median://moxo/registerNotifications', params, true);
   },
-  requestPermission: function (params: MoxoNotificationParams) {
-    return addCommandCallback<MoxoNotificationResult>('median://moxo/registerNotifications', params, true);
+  requestPermission: function (params: CallbackParams<PermissionStatusData>) {
+    return addCommandCallback<PermissionStatusData>('median://moxo/registerNotifications', params, true);
   },
-  permissionStatus: function (params: MoxoNotificationParams) {
-    return addCommandCallback<MoxoNotificationResult>('median://moxo/permissionStatus', params, true);
+  permissionStatus: function (params: CallbackParams<PermissionStatusData>) {
+    return addCommandCallback<PermissionStatusData>('median://moxo/permissionStatus', params, true);
   },
   isLinked: function (params: CallbackParams<{ isLinked: boolean }>) {
     return addCommandCallback<{ isLinked: boolean }>('median://moxo/isLinked', params, true);
   },
-  unlink: function (params: CallbackParams<MoxoResult>) {
-    return addCommandCallback<MoxoResult>('median://moxo/unlink', params, true);
+  unlink: function (params: CallbackParams<CallbackData>) {
+    return addCommandCallback<CallbackData>('median://moxo/unlink', params, true);
   },
-  localUnlink: function (params: CallbackParams<MoxoResult>) {
-    return addCommandCallback<MoxoResult>('median://moxo/localUnlink', params, true);
+  localUnlink: function (params: CallbackParams<CallbackData>) {
+    return addCommandCallback<CallbackData>('median://moxo/localUnlink', params, true);
   },
   showDashboard: function () {
     addCommand('median://moxo/showDashboard');

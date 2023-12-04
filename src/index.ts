@@ -1,23 +1,14 @@
 import * as plugins from './plugins';
 import { android, general, ios } from './commands';
+import { ShareToAppData } from './plugins/share';
 import { AnyData } from './types';
+import { createTempFunctionName, setMedianCallback } from './utils';
 
 class Median {
   #listeners: Record<string, Record<string, (...args: AnyData) => void>> = {};
 
-  #updateGlobalListener = (functionName: AnyData, callbackFunctions: Record<string, (...args: AnyData) => void>) => {
-    (window[functionName] as AnyData) = function (...args: AnyData) {
-      Object.keys(callbackFunctions).forEach((key) => {
-        const callbackFunction = callbackFunctions[key];
-        if (typeof callbackFunction === 'function') {
-          callbackFunction(...args);
-        }
-      });
-    };
-  };
-
   #addListener = <T>(functionName: string, callback: (data: T) => void) => {
-    const functionId = `${functionName}_${Math.random().toString(36).slice(2)}`;
+    const functionId = createTempFunctionName(functionName);
 
     if (typeof callback !== 'function') {
       return functionId;
@@ -27,7 +18,7 @@ class Median {
     const callbackFunctions = this.#listeners[functionName];
     callbackFunctions[functionId] = callback;
 
-    this.#updateGlobalListener(functionName, callbackFunctions);
+    setMedianCallback(functionName, callbackFunctions);
 
     return functionId;
   };
@@ -41,7 +32,7 @@ class Median {
     const callbackFunctions = this.#listeners[functionName];
     delete callbackFunctions[functionId];
 
-    this.#updateGlobalListener(functionName, callbackFunctions);
+    setMedianCallback(functionName, callbackFunctions);
   };
 
   #createListenerProp = <T = void>(functionName: string) => {
@@ -55,13 +46,9 @@ class Median {
     };
   };
 
-  // iOS
-  ios = ios;
-
-  // Android
-  android = android;
-
   // General
+  ios = ios;
+  android = android;
   clipboard = general.clipboard;
   config = general.config;
   connectivity = general.connectivity;
@@ -95,6 +82,7 @@ class Median {
   barcode = plugins.barcode;
   beacon = plugins.beacon;
   braze = plugins.braze;
+  calendar = plugins.calendar;
   card_io = plugins.card_io;
   contacts = plugins.contacts;
   cordial = plugins.cordial;
@@ -103,10 +91,13 @@ class Median {
   esmiley = plugins.esmiley;
   facebook = plugins.facebook;
   firebaseAnalytics = plugins.firebaseAnalytics;
+  firebaseCrashlytics = plugins.firebaseCrashlytics;
   haptics = plugins.haptics;
   iap = plugins.iap;
   intercom = plugins.intercom;
+  iterable = plugins.iterable;
   kaltura = plugins.kaltura;
+  keychainSwift = plugins.keychainSwift;
   localpreferences = plugins.localpreferences;
   modal = plugins.modal;
   moengage = plugins.moengage;
@@ -124,11 +115,11 @@ class Median {
   };
   twilio = plugins.twilio;
 
+  // Median Functions
   isNativeApp = () => {
     return !!window?.webkit?.messageHandlers?.JSBridge || !!window?.JSBridge;
   };
 
-  // median_library_ready
   onReady = (callback: () => void) => {
     if (typeof callback === 'function') {
       let callbackFunction: (() => void) | null = callback;
@@ -150,14 +141,9 @@ class Median {
     }
   };
 
-  // median_app_resumed
   appResumed = this.#createListenerProp('_median_app_resumed');
-
-  // median_device_shake
   deviceShake = this.#createListenerProp('_median_device_shake');
-
-  // median_share_to_app
-  shareToApp = this.#createListenerProp<plugins.share.ShareToAppData>('_median_share_to_app');
+  shareToApp = this.#createListenerProp<ShareToAppData>('_median_share_to_app');
 }
 
 export default new Median();

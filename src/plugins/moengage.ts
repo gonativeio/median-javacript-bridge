@@ -1,16 +1,12 @@
-import { AnyData, CallbackData, CallbackParams } from '../types';
+import { AnyData, CallbackData, CallbackParams, PermissionStatusData } from '../types';
 import { addCommandCallback } from '../utils';
 
-type MoEngageNotificationResult = { granted: boolean };
-
-type MoEngageNotificationParams = CallbackParams<MoEngageNotificationResult>;
-
 const moengage = {
-  notificationEnabled: function (params: MoEngageNotificationParams) {
-    return addCommandCallback<MoEngageNotificationResult>('median://moengage/notificationEnabled', params, true);
+  notificationEnabled: function (params: CallbackParams<PermissionStatusData>) {
+    return addCommandCallback<PermissionStatusData>('median://moengage/notificationEnabled', params, true);
   },
-  promptNotification: function (params: MoEngageNotificationParams) {
-    return addCommandCallback<MoEngageNotificationResult>('median://moengage/promptNotification', params, true);
+  promptNotification: function (params: CallbackParams<PermissionStatusData>) {
+    return addCommandCallback<PermissionStatusData>('median://moengage/promptNotification', params, true);
   },
   setUniqueID: function (uniqueId: string) {
     return addCommandCallback<CallbackData>('median://moengage/setUniqueID', { uniqueId }, true);

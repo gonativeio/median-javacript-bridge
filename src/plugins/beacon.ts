@@ -1,6 +1,6 @@
 import { addCommand } from '../utils';
 
-type BeaconScanResult = {
+type BeaconScanData = {
   success: boolean;
   beacons: {
     format: string;
@@ -15,7 +15,7 @@ type BeaconScanResult = {
 };
 
 type BeaconScanParams = {
-  callback: (data: BeaconScanResult) => void;
+  callback: (data: BeaconScanData) => void;
   uuid?: string;
 };
 

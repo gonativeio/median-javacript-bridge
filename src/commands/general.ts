@@ -1,14 +1,14 @@
 import { AnyData, CallbackParams } from '../types';
 import { addCommand, addCommandCallback } from '../utils';
 
-type ClipboardResult = { data: string };
+type ClipboardData = { data: string };
 
 const clipboard = {
-  set: function (params: ClipboardResult) {
+  set: function (params: ClipboardData) {
     addCommand('median://clipboard/set', params);
   },
-  get: function (params: CallbackParams<ClipboardResult>) {
-    return addCommandCallback<ClipboardResult>('median://clipboard/get', params);
+  get: function (params: CallbackParams<ClipboardData>) {
+    return addCommandCallback<ClipboardData>('median://clipboard/get', params);
   },
 };
 
@@ -18,14 +18,14 @@ const config = {
   },
 };
 
-type ConnectivityResult = { connected: number; type: string };
+type ConnectivityData = { connected: number; type: string };
 
 const connectivity = {
-  get: function (params: CallbackParams<ConnectivityResult>) {
-    return addCommandCallback<ConnectivityResult>('median://connectivity/get', params);
+  get: function (params: CallbackParams<ConnectivityData>) {
+    return addCommandCallback<ConnectivityData>('median://connectivity/get', params);
   },
-  subscribe: function (params: CallbackParams<ConnectivityResult>) {
-    return addCommandCallback<ConnectivityResult>('median://connectivity/subscribe', params, true);
+  subscribe: function (params: CallbackParams<ConnectivityData>) {
+    return addCommandCallback<ConnectivityData>('median://connectivity/subscribe', params, true);
   },
   unsubscribe: function () {
     addCommand('median://connectivity/unsubscribe');
@@ -247,7 +247,7 @@ type SidebarSetParams = {
   persist: boolean;
 };
 
-type SidebarGetResult = {
+type SidebarGetData = {
   active: boolean;
   items: (SidebarItem | SidebarGroupItem)[] | null;
   name: string;
@@ -257,8 +257,8 @@ const sidebar = {
   setItems: function (params: SidebarSetParams) {
     addCommand('median://sidebar/setItems', params);
   },
-  getItems: function (params: CallbackParams<SidebarGetResult>) {
-    return addCommandCallback<SidebarGetResult>('median://sidebar/getItems', params);
+  getItems: function (params: CallbackParams<SidebarGetData>) {
+    return addCommandCallback<SidebarGetData>('median://sidebar/getItems', params);
   },
 };
 
