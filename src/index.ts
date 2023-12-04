@@ -1,33 +1,64 @@
-import * as plugins from './plugin';
-import { general, ios, android } from './commands';
+import * as plugins from './plugins';
+import { android, general, ios } from './commands';
+import { AnyData } from './types';
 
 class Median {
-  isNativeApp = () => {
-    return !!window?.webkit?.messageHandlers?.JSBridge || !!window?.JSBridge;
+  #listeners: Record<string, Record<string, (...args: AnyData) => void>> = {};
+
+  #updateGlobalListener = (functionName: AnyData, callbackFunctions: Record<string, (...args: AnyData) => void>) => {
+    (window[functionName] as AnyData) = function (...args: AnyData) {
+      Object.keys(callbackFunctions).forEach((key) => {
+        const callbackFunction = callbackFunctions[key];
+        if (typeof callbackFunction === 'function') {
+          callbackFunction(...args);
+        }
+      });
+    };
   };
 
-  #onReadyCallback?: () => void;
-  onReady = (callback: () => void) => {
-    if (typeof callback === 'function') {
-      this.#onReadyCallback = callback;
-      let counter = 0;
+  #addListener = <T>(functionName: string, callback: (data: T) => void) => {
+    const functionId = `${functionName}_${Math.random().toString(36).slice(2)}`;
 
-      const intervalFunction = setInterval(() => {
-        counter += 1;
-
-        if (this.isNativeApp() && this.#onReadyCallback) {
-          this.#onReadyCallback();
-          this.#onReadyCallback = undefined;
-        }
-
-        if (counter >= 50 || !this.#onReadyCallback) {
-          clearInterval(intervalFunction);
-        }
-      }, 100);
+    if (typeof callback !== 'function') {
+      return functionId;
     }
+
+    this.#listeners[functionName] = this.#listeners[functionName] || {};
+    const callbackFunctions = this.#listeners[functionName];
+    callbackFunctions[functionId] = callback;
+
+    this.#updateGlobalListener(functionName, callbackFunctions);
+
+    return functionId;
   };
 
+  #removeListener = (functionName: string, functionId: string) => {
+    if (!functionName || !functionId) {
+      return;
+    }
+
+    this.#listeners[functionName] = this.#listeners[functionName] || {};
+    const callbackFunctions = this.#listeners[functionName];
+    delete callbackFunctions[functionId];
+
+    this.#updateGlobalListener(functionName, callbackFunctions);
+  };
+
+  #createListenerProp = <T = void>(functionName: string) => {
+    return {
+      addListener: (callback: (data: T) => void) => {
+        return this.#addListener<T>(functionName, callback);
+      },
+      removeListener: (functionId: string) => {
+        return this.#removeListener(functionName, functionId);
+      },
+    };
+  };
+
+  // iOS
   ios = ios;
+
+  // Android
   android = android;
 
   // General
@@ -49,7 +80,6 @@ class Median {
   sidebar = general.sidebar;
   statusbar = general.statusbar;
   tabNavigation = general.tabNavigation;
-  webconsolelogs = general.webconsolelogs;
   webview = general.webview;
   window = general.window;
 
@@ -85,10 +115,49 @@ class Median {
   opentok = plugins.opentok;
   permissions = plugins.permissions;
   plaid = plugins.plaid;
-  purchase = plugins.purchase;
+  purchase = plugins.iap.purchase;
   socialLogin = plugins.socialLogin;
-  storage = plugins.storage;
+  storage = {
+    app: plugins.localpreferences.nonpersistent,
+    cloud: plugins.localpreferences.persistent,
+    filesystem: plugins.localpreferences.filesystem,
+  };
   twilio = plugins.twilio;
+
+  isNativeApp = () => {
+    return !!window?.webkit?.messageHandlers?.JSBridge || !!window?.JSBridge;
+  };
+
+  // median_library_ready
+  onReady = (callback: () => void) => {
+    if (typeof callback === 'function') {
+      let callbackFunction: (() => void) | null = callback;
+      let counter = 0;
+
+      const intervalFunction = setInterval(() => {
+        if (this.isNativeApp() && callbackFunction) {
+          callbackFunction();
+          callbackFunction = null;
+          return;
+        }
+
+        counter += 1;
+        if (counter >= 20 || !callbackFunction) {
+          clearInterval(intervalFunction);
+          return;
+        }
+      }, 500);
+    }
+  };
+
+  // median_app_resumed
+  appResumed = this.#createListenerProp('_median_app_resumed');
+
+  // median_device_shake
+  deviceShake = this.#createListenerProp('_median_device_shake');
+
+  // median_share_to_app
+  shareToApp = this.#createListenerProp<plugins.share.ShareToAppData>('_median_share_to_app');
 }
 
 export default new Median();

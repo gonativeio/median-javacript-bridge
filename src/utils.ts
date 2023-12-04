@@ -1,3 +1,5 @@
+import { AnyData } from './types';
+
 interface JSBridgeType {
   postMessage?: (data: string) => void;
 }
@@ -13,48 +15,28 @@ declare global {
   }
 }
 
-export function addCommandCallback(command?: any, params?: any, persistCallback?: boolean) {
-  if (params && params.callback) {
-    // execute command with provided callback function
-    addCommand(command, params, persistCallback);
-  } else {
-    // create a temporary function and return a promise that executes command
-    const tempFunctionName: any = '_gonative_temp_' + Math.random().toString(36).slice(2);
-    if (!params) params = {};
-    params.callback = tempFunctionName;
-    return new Promise(function (resolve) {
-      // declare a temporary function
-      (window[tempFunctionName] as any) = function (data: any) {
-        resolve(data);
-        delete window[tempFunctionName];
-      };
-      // execute command
-      addCommand(command, params);
-    });
-  }
-}
-
-export function addCallbackFunction(callbackFunction?: any, persistCallback?: boolean) {
-  let callbackName: any;
+export function addCallbackFunction(callbackFunction: string | ((data?: AnyData) => void), persistCallback?: boolean) {
   if (typeof callbackFunction === 'string') {
-    callbackName = callbackFunction;
-  } else {
-    callbackName = '_gonative_temp_' + Math.random().toString(36).slice(2);
-    (window[callbackName] as any) = function (...args: any) {
-      callbackFunction(...args);
-      if (!persistCallback) {
-        // if callback is used just once
-        delete window[callbackName];
-      }
-    };
+    return callbackFunction;
   }
+
+  const callbackName = '_median_temp_' + Math.random().toString(36).slice(2);
+
+  (window[callbackName as AnyData] as AnyData) = function (...args: AnyData) {
+    callbackFunction(...args);
+    if (!persistCallback) {
+      delete window[callbackName as AnyData];
+    }
+  };
+
   return callbackName;
 }
 
-export function addCommand(command?: any, params?: any, persistCallback?: boolean) {
-  let data: any = undefined;
+export function addCommand(command: string, params?: AnyData, persistCallback?: boolean) {
+  let data = command;
+
   if (params) {
-    const commandObject: any = {};
+    const commandObject: AnyData = {};
     if (params.callback && typeof params.callback === 'function') {
       params.callback = addCallbackFunction(params.callback, persistCallback);
     }
@@ -67,12 +49,37 @@ export function addCommand(command?: any, params?: any, persistCallback?: boolea
     commandObject.gonativeCommand = command;
     commandObject.data = params;
     data = JSON.stringify(commandObject);
-  } else data = command;
+  }
 
   if (window.JSBridge?.postMessage) {
     window.JSBridge.postMessage(data);
   }
   if (window.webkit?.messageHandlers?.JSBridge?.postMessage) {
     window.webkit.messageHandlers.JSBridge.postMessage(data);
+  }
+}
+
+export function addCommandCallback<T = AnyData>(
+  command: string,
+  params?: AnyData,
+  persistCallback?: boolean
+): Promise<T> | undefined {
+  if (params && params.callback) {
+    addCommand(command, params, persistCallback);
+  } else {
+    const tempFunctionName = '_median_temp_' + Math.random().toString(36).slice(2);
+
+    if (!params) {
+      params = {};
+    }
+
+    params.callback = tempFunctionName;
+    return new Promise(function (resolve) {
+      (window[tempFunctionName as AnyData] as AnyData) = function (data: T) {
+        resolve(data);
+        delete window[tempFunctionName as AnyData];
+      };
+      addCommand(command, params);
+    });
   }
 }
