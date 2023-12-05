@@ -1,37 +1,21 @@
-import { AnyData, CallbackParams, CallbackData } from '../types';
+import { AnyData, CallbackParams } from '../types';
 import { addCommand, addCommandCallback } from '../utils';
+import { AuthDeleteParams, AuthGetParams, AuthSaveParams, AuthStatusData } from './auth';
 
-type Auth0LoginUniveralResult = {
+type Auth0LoginUniveralData = {
   idToken: string;
   scope?: string;
   error?: string;
 };
 
 type Auth0LoginUniveralParams = {
-  callback?: (data: Auth0LoginUniveralResult) => void;
+  callback?: (data: Auth0LoginUniveralData) => void;
   enableBiometrics?: boolean;
-};
-
-type AuthStatusResult = { biometryType: string; hasTouchId: boolean; hasSecret: boolean };
-
-type Auth0SaveParams = {
-  callback?: (data: CallbackData) => void;
-  secret: string;
-};
-
-type Auth0GetParams = {
-  callback?: (data: { success: boolean; error?: string; secret?: string }) => void;
-  prompt?: string;
 };
 
 type Auth0ProfileParams = {
   accessToken: string;
   callback?: (data: AnyData) => void;
-};
-
-type Auth0DeleteParams = {
-  callback?: (data: { success: boolean; error?: string; secret?: string }) => void;
-  prompt?: string;
 };
 
 const auth0 = {
@@ -41,22 +25,22 @@ const auth0 = {
   logout: function (params: CallbackParams<{ error?: string }>) {
     addCommand('median://auth0/logout', params);
   },
-  status: function (params: CallbackParams<AuthStatusResult>) {
-    return addCommandCallback<AuthStatusResult>('median://auth0/status', params);
+  status: function (params: CallbackParams<AuthStatusData>) {
+    return addCommandCallback<AuthStatusData>('median://auth0/status', params);
   },
-  save: function (params: Auth0SaveParams) {
+  save: function (params: AuthSaveParams) {
     if (typeof params.secret !== 'string') {
       params.secret = JSON.stringify(params.secret);
     }
     addCommand('median://auth0/save', params);
   },
   profile: function (params: Auth0ProfileParams) {
-    return addCommandCallback('median://auth0/profile', params);
+    return addCommandCallback<Auth0LoginUniveralData>('median://auth0/profile', params);
   },
-  get: function (params: Auth0GetParams) {
+  get: function (params: AuthGetParams) {
     addCommand('median://auth0/get', params);
   },
-  delete: function (params: Auth0DeleteParams) {
+  delete: function (params: AuthDeleteParams) {
     addCommand('median://auth0/delete', params);
   },
 };

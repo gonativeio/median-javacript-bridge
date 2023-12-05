@@ -1,26 +1,26 @@
 import { CallbackParams, CallbackData } from '../types';
 import { addCommand, addCommandCallback } from '../utils';
 
-type AuthStatusResult = { biometryType: string; hasTouchId: boolean; hasSecret: boolean; error: string };
+type AuthStatusData = { biometryType: string; hasTouchId: boolean; hasSecret: boolean; error: string };
 
-type AuthSaveParams = {
+export type AuthSaveParams = {
   callback?: (data: CallbackData) => void;
   secret: string;
 };
 
-type AuthGetParams = {
+export type AuthGetParams = {
   callback?: (data: { success: boolean; error?: string; secret?: string }) => void;
   prompt?: string;
 };
 
-type AuthDeleteParams = {
+export type AuthDeleteParams = {
   callback?: (data: { success: boolean; error?: string; secret?: string }) => void;
   prompt?: string;
 };
 
 const auth = {
-  status: function (params: CallbackParams<AuthStatusResult>) {
-    return addCommandCallback<AuthStatusResult>('median://auth/status', params);
+  status: function (params: CallbackParams<AuthStatusData>) {
+    return addCommandCallback<AuthStatusData>('median://auth/status', params);
   },
   save: function (params: AuthSaveParams) {
     if (typeof params.secret !== 'string') {

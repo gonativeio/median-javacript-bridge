@@ -28,13 +28,15 @@ OR
             Median.onReady(() => {
                 window.alert("Median app ready!");
             });
-    }, []);
+        }, []);
+    }
 
 ## Usage with listeners
 
     const listenerId = Median.appResumed.addListener(() => {
-        console.log("app resumed callback");
+        console.log("App resumed callback");
     });
+
     Median.appResumed.removeListener(listenerId);
 
 ### Share into app plugin

@@ -14,7 +14,7 @@ type BackgroundMediaStreamPlaylistParams = {
   tracks: BackgroundMediaTrack[];
 };
 
-type BackgroundMediaPlayerStatusResult = {
+type BackgroundMediaPlayerStatusData = {
   currentTime: number;
   isPaused: boolean;
   album: string;
@@ -46,8 +46,8 @@ const backgroundMedia = {
   resume: function () {
     addCommand('median://backgroundMedia/resume');
   },
-  getPlayerStatus: function (params: CallbackParams<BackgroundMediaPlayerStatusResult>) {
-    return addCommandCallback<BackgroundMediaPlayerStatusResult>('median://backgroundMedia/getPlayerStatus', params);
+  getPlayerStatus: function (params: CallbackParams<BackgroundMediaPlayerStatusData>) {
+    return addCommandCallback<BackgroundMediaPlayerStatusData>('median://backgroundMedia/getPlayerStatus', params);
   },
 };
 

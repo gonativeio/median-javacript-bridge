@@ -1,6 +1,6 @@
 import { addCommandCallback } from '../utils';
 
-type CardIoScanResult = {
+type CardIoScanData = {
   cardNumber: string;
   cardholderName: string;
   expiryMonth: number;
@@ -9,7 +9,7 @@ type CardIoScanResult = {
 };
 
 type CardIoScanParams = {
-  callback?: (data: CardIoScanResult) => void;
+  callback?: (data: CardIoScanData) => void;
   requireExpiry?: boolean;
   scanExpiry?: boolean;
   requireCVV?: boolean;
@@ -23,7 +23,7 @@ type CardIoScanParams = {
 
 const card_io = {
   scanCard: function (params: CardIoScanParams) {
-    return addCommandCallback<CardIoScanResult>('median://card.io/scanCard', params);
+    return addCommandCallback<CardIoScanData>('median://card.io/scanCard', params);
   },
 };
 

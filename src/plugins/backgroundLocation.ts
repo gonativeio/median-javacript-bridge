@@ -1,7 +1,7 @@
 import { AnyData } from '../types';
 import { addCommand } from '../utils';
 
-type BackgroundLocationResult = {
+type BackgroundLocationData = {
   timestamp: AnyData;
   latitude: number;
   longitude: number;
@@ -14,7 +14,7 @@ type BackgroundLocationResult = {
 };
 
 type BackgroundLocationParams = {
-  callback?: (data: BackgroundLocationResult) => void;
+  callback?: (data: BackgroundLocationData) => void;
   postUrl?: string;
 
   // iOS

@@ -1,7 +1,7 @@
 import { CallbackParams } from '../types';
 import { addCommandCallback } from '../utils';
 
-type PlaidLinkBankResult = {
+type PlaidLinkBankData = {
   success: boolean;
   error?: string;
   linkSessionID: string;
@@ -9,11 +9,11 @@ type PlaidLinkBankResult = {
 };
 
 const plaid = {
-  linkBank: function (params: CallbackParams<PlaidLinkBankResult> & { linkToken: string }) {
-    return addCommandCallback<PlaidLinkBankResult>('median://plaid/linkBank', params);
+  linkBank: function (params: CallbackParams<PlaidLinkBankData> & { linkToken: string }) {
+    return addCommandCallback<PlaidLinkBankData>('median://plaid/linkBank', params);
   },
-  verifyIdentity: function (params: CallbackParams<PlaidLinkBankResult> & { linkToken: string }) {
-    return addCommandCallback<PlaidLinkBankResult>('median://plaid/verifyIdentity', params);
+  verifyIdentity: function (params: CallbackParams<PlaidLinkBankData> & { linkToken: string }) {
+    return addCommandCallback<PlaidLinkBankData>('median://plaid/verifyIdentity', params);
   },
 };
 
