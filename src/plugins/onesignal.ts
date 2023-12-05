@@ -19,7 +19,7 @@ type OneSignalInfo = {
   timeZone: string;
 } & Record<string, string | boolean | number>;
 
-type OneSignalGetTagsResult = CallbackData & {
+type OneSignalGetTagsData = CallbackData & {
   tags: Record<string, string>;
 };
 
@@ -51,8 +51,8 @@ const onesignal = {
     },
   },
   tags: {
-    getTags: function (params: CallbackParams<OneSignalGetTagsResult>) {
-      return addCommandCallback<OneSignalGetTagsResult>('median://onesignal/tags/get', params);
+    getTags: function (params: CallbackParams<OneSignalGetTagsData>) {
+      return addCommandCallback<OneSignalGetTagsData>('median://onesignal/tags/get', params);
     },
     setTags: function (params: CallbackParams<CallbackData> & { tags: Record<string, string> }) {
       addCommand('median://onesignal/tags/set', params);

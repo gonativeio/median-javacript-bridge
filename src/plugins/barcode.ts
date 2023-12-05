@@ -1,7 +1,7 @@
 import { CallbackParams } from '../types';
 import { addCommand, addCommandCallback } from '../utils';
 
-type BarcodeScanResult = {
+type BarcodeScanData = {
   success: boolean;
   type?: string;
   code?: string;
@@ -9,8 +9,8 @@ type BarcodeScanResult = {
 };
 
 const barcode = {
-  scan: function (params: CallbackParams<BarcodeScanResult>) {
-    return addCommandCallback<BarcodeScanResult>('median://barcode/scan', params);
+  scan: function (params: CallbackParams<BarcodeScanData>) {
+    return addCommandCallback<BarcodeScanData>('median://barcode/scan', params);
   },
   setPrompt: function (prompt: string) {
     return addCommand('median://barcode/setPrompt', { prompt });

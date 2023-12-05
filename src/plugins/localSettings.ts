@@ -1,41 +1,41 @@
 import { addCommand, addCommandCallback } from '../utils';
 
-type LocalPreferencesSaveResult = { status: string };
+type LocalPreferencesSaveData = { status: string };
 
 type LocalPreferencesSetParams = {
   key: string;
   value: string;
-  statuscallback?: (data: LocalPreferencesSaveResult) => void;
+  statuscallback?: (data: LocalPreferencesSaveData) => void;
 };
 
 type LocalPreferencesGetParams = {
   key: string;
-  statuscallback?: (data: LocalPreferencesSaveResult) => void;
+  statuscallback?: (data: LocalPreferencesSaveData) => void;
 };
 
 type LocalPreferencesDeleteParams = {
   key: string;
-  statuscallback?: (data: LocalPreferencesSaveResult) => void;
+  statuscallback?: (data: LocalPreferencesSaveData) => void;
 };
 
 type LocalPreferencesDeleteAllParams = {
-  statuscallback?: (data: LocalPreferencesSaveResult) => void;
+  statuscallback?: (data: LocalPreferencesSaveData) => void;
 };
 
 type LocalPreferencesWriteFileParams = {
   filename: string;
   data: string;
-  statuscallback?: (data: LocalPreferencesSaveResult) => void;
+  statuscallback?: (data: LocalPreferencesSaveData) => void;
 };
 
 type LocalPreferencesReadFileParams = {
   filename: string;
-  callback?: (data: LocalPreferencesSaveResult) => void;
+  callback?: (data: LocalPreferencesSaveData) => void;
 };
 
 type LocalPreferencesDeleteFileParams = {
   filename: string;
-  statuscallback?: (data: LocalPreferencesSaveResult) => void;
+  statuscallback?: (data: LocalPreferencesSaveData) => void;
 };
 
 const localpreferences = {
@@ -44,7 +44,7 @@ const localpreferences = {
       addCommand('median://localpreferences/nonpersistent/set', params);
     },
     get: function (params: LocalPreferencesGetParams) {
-      return addCommandCallback<LocalPreferencesSaveResult>('median://localpreferences/nonpersistent/get', params);
+      return addCommandCallback<LocalPreferencesSaveData>('median://localpreferences/nonpersistent/get', params);
     },
     delete: function (params: LocalPreferencesDeleteParams) {
       addCommand('median://localpreferences/nonpersistent/delete', params);
@@ -58,7 +58,7 @@ const localpreferences = {
       addCommand('median://localpreferences/persistent/set', params);
     },
     get: function (params: LocalPreferencesGetParams) {
-      return addCommandCallback<LocalPreferencesSaveResult>('median://localpreferences/persistent/get', params);
+      return addCommandCallback<LocalPreferencesSaveData>('median://localpreferences/persistent/get', params);
     },
     delete: function (params: LocalPreferencesDeleteParams) {
       addCommand('median://localpreferences/persistent/delete', params);
@@ -72,7 +72,7 @@ const localpreferences = {
       addCommand('median://localpreferences/filesystem/save', params);
     },
     read: function (params: LocalPreferencesReadFileParams) {
-      return addCommandCallback<LocalPreferencesSaveResult>('median://localpreferences/filesystem/read', params);
+      return addCommandCallback<LocalPreferencesSaveData>('median://localpreferences/filesystem/read', params);
     },
     delete: function (params: LocalPreferencesDeleteFileParams) {
       addCommand('median://localpreferences/filesystem/delete', params);

@@ -1,7 +1,5 @@
-import { CallbackData, CallbackParams } from '../types';
+import { CallbackData, CallbackParams, PermissionStatusData } from '../types';
 import { addCommand, addCommandCallback } from '../utils';
-
-type CordialNotificationResult = { granted: boolean };
 
 const cordial = {
   setContact: function (params: CallbackParams<CallbackData>) {
@@ -16,11 +14,11 @@ const cordial = {
     }
     addCommand('median://cordial/unsetContact', params);
   },
-  permissionStatus: function (params: CallbackParams<CordialNotificationResult>) {
-    return addCommandCallback<CordialNotificationResult>('median://cordial/permissionStatus', params, true);
+  permissionStatus: function (params: CallbackParams<PermissionStatusData>) {
+    return addCommandCallback<PermissionStatusData>('median://cordial/permissionStatus', params, true);
   },
-  requestPermission: function (params: CallbackParams<CordialNotificationResult>) {
-    return addCommandCallback<CordialNotificationResult>('median://cordial/requestPermission', params, true);
+  requestPermission: function (params: CallbackParams<PermissionStatusData>) {
+    return addCommandCallback<PermissionStatusData>('median://cordial/requestPermission', params, true);
   },
 };
 

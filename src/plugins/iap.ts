@@ -9,12 +9,12 @@ type InAppPurchaseParams = Record<string, AnyData> & {
   replacementMode?: string;
 };
 
-type InAppPurchaseResult = Record<string, AnyData> & {
+type InAppPurchaseData = Record<string, AnyData> & {
   platform: string;
   allPurchases: AnyData[];
 };
 
-type InAppPurchaseInfoResult = {
+type InAppPurchaseInfo = {
   inAppPurchases: Record<string, AnyData> & {
     platform: string;
     products: (Record<string, AnyData> & {
@@ -28,7 +28,7 @@ const iap = {
   purchase: function (params: InAppPurchaseParams) {
     const productId = params.productID;
     params.productID = null;
-    return addCommandCallback<InAppPurchaseResult>('median://purchase/' + productId, params);
+    return addCommandCallback<InAppPurchaseData>('median://purchase/' + productId, params);
   },
   manageSubscription: function (params: { productID: string }) {
     addCommand('median://iap/manageSubscription', params);
@@ -40,7 +40,7 @@ const iap = {
     addCommand('median://iap/restorePurchases');
   },
   info: function () {
-    return addCommandCallback<InAppPurchaseInfoResult>('median://iap/info');
+    return addCommandCallback<InAppPurchaseInfo>('median://iap/info');
   },
   refresh: function () {
     addCommand('median://iap/refresh');

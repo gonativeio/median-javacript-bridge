@@ -1,7 +1,7 @@
 import { CallbackParams } from '../types';
 import { addCommandCallback } from '../utils';
 
-type ContactsGetResult = {
+type ContactsGetData = {
   success: boolean;
   contacts: {
     birthday?: string;
@@ -38,14 +38,14 @@ type ContactsGetResult = {
   }[];
 };
 
-type ContactsPermissionResult = { status: 'granted' | 'denied' | 'restricted' | 'notDetermined' };
+type ContactsPermissionData = { status: 'granted' | 'denied' | 'restricted' | 'notDetermined' };
 
 const contacts = {
-  getAll: function (params: CallbackParams<ContactsGetResult>) {
-    return addCommandCallback<ContactsGetResult>('median://contacts/getAll', params);
+  getAll: function (params: CallbackParams<ContactsGetData>) {
+    return addCommandCallback<ContactsGetData>('median://contacts/getAll', params);
   },
-  getPermissionStatus: function (params: CallbackParams<ContactsPermissionResult>) {
-    return addCommandCallback<ContactsPermissionResult>('median://contacts/getPermissionStatus', params);
+  getPermissionStatus: function (params: CallbackParams<ContactsPermissionData>) {
+    return addCommandCallback<ContactsPermissionData>('median://contacts/getPermissionStatus', params);
   },
 };
 
