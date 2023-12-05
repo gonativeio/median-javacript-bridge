@@ -1,7 +1,7 @@
 import { CallbackParams, CallbackData } from '../types';
 import { addCommand, addCommandCallback } from '../utils';
 
-type AuthStatusResult = { biometryType: string; hasTouchId: boolean; hasSecret: boolean };
+type AuthStatusResult = { biometryType: string; hasTouchId: boolean; hasSecret: boolean; error: string };
 
 type AuthSaveParams = {
   callback?: (data: CallbackData) => void;
