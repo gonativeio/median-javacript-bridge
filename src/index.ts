@@ -102,11 +102,14 @@ class Median {
   modal = plugins.modal;
   moengage = plugins.moengage;
   moxo = plugins.moxo;
+  msdynamics = plugins.msdynamics;
+  nfc = plugins.nfc;
   onesignal = plugins.onesignal;
   opentok = plugins.opentok;
   permissions = plugins.permissions;
   plaid = plugins.plaid;
   purchase = plugins.iap.purchase;
+  revenueCat = plugins.revenueCat;
   socialLogin = plugins.socialLogin;
   storage = {
     app: plugins.localpreferences.nonpersistent,
