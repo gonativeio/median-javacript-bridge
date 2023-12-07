@@ -93,11 +93,11 @@ const onesignal = {
     },
   },
   externalUserId: {
-    set: function (params: { externalId: string | number; callback?: string }) {
-      return addCommandCallback('median://onesignal/externalUserId/set', params);
+    set: function (params: CallbackParams<CallbackData> & { externalId: string | number }) {
+      return addCommandCallback<CallbackData>('median://onesignal/externalUserId/set', params);
     },
-    remove: function (params?: { callback?: string }) {
-      return addCommandCallback('median://onesignal/externalUserId/remove', params);
+    remove: function (params: CallbackParams<CallbackData>) {
+      return addCommandCallback<CallbackData>('median://onesignal/externalUserId/remove', params);
     },
   },
   enableForegroundNotifications: function (enabled: boolean) {
