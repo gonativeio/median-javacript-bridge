@@ -66,9 +66,11 @@ export function addCommand(command: string, params?: AnyData, persistCallback?: 
     data.data = params;
   }
 
+  // Android
   if (window.JSBridge?.postMessage) {
-    window.JSBridge.postMessage(data);
+    window.JSBridge.postMessage(JSON.stringify(data));
   }
+  // iOS
   if (window.webkit?.messageHandlers?.JSBridge?.postMessage) {
     window.webkit.messageHandlers.JSBridge.postMessage(data);
   }
