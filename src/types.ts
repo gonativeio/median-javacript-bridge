@@ -2,7 +2,7 @@
 
 export type AnyData = any;
 
-export type CallbackParams<T = void> = {
+export type CallbackParams<T = void> = void | {
   callback?: (data: T) => void;
   callbackFunction?: (data: T) => void;
   statuscallback?: (data: T) => void;

@@ -1,5 +1,5 @@
 import { CallbackData } from '../types';
-import { addCommand, addCommandCallback } from '../utils';
+import { addCommandCallback } from '../utils';
 
 type TwilioJoinParams = {
   apiKey: string;
@@ -11,10 +11,7 @@ type TwilioJoinParams = {
 const twilio = {
   video: {
     join: function (params: TwilioJoinParams) {
-      if (params.callback) {
-        return addCommandCallback('median://twilio/video/join', params);
-      }
-      addCommand('median://twilio/video/join', params);
+      return addCommandCallback('median://twilio/video/join', params);
     },
   },
 };

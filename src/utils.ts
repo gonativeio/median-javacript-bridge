@@ -49,10 +49,10 @@ export function addCallbackFunction(callbackFunction: string | ((data?: AnyData)
 }
 
 export function addCommand(command: string, params?: AnyData, persistCallback?: boolean) {
-  let data = command;
+  let data: AnyData = command;
 
   if (params) {
-    const commandObject: AnyData = {};
+    data = {};
     if (params.callback && typeof params.callback === 'function') {
       params.callback = addCallbackFunction(params.callback, persistCallback);
     }
@@ -62,9 +62,8 @@ export function addCommand(command: string, params?: AnyData, persistCallback?: 
     if (params.statuscallback && typeof params.statuscallback === 'function') {
       params.statuscallback = addCallbackFunction(params.statuscallback, persistCallback);
     }
-    commandObject.gonativeCommand = command;
-    commandObject.data = params;
-    data = JSON.stringify(commandObject);
+    data.medianCommand = command;
+    data.data = params;
   }
 
   if (window.JSBridge?.postMessage) {
@@ -80,7 +79,7 @@ export function addCommandCallback<T = AnyData>(
   params?: AnyData,
   persistCallback?: boolean
 ): Promise<T> | undefined {
-  if (params && params.callback) {
+  if (params?.callback || params?.callbackFunction || params?.statuscallback) {
     addCommand(command, params, persistCallback);
   } else {
     const tempFunctionName = createTempFunctionName();

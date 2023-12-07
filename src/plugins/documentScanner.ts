@@ -9,7 +9,7 @@ type DocumentScannerScanData = {
 
 const documentScanner = {
   scanPage: function (params: CallbackParams<DocumentScannerScanData>) {
-    if (params.callback) {
+    if (params?.callback) {
       return addCommandCallback('median://documentScanner/scanPage', params);
     }
     addCommand('median://documentScanner/scanPage', params);

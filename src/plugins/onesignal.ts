@@ -93,7 +93,7 @@ const onesignal = {
     },
   },
   externalUserId: {
-    set: function (params: { externalId: string | number, callback?: string }) {
+    set: function (params: { externalId: string | number; callback?: string }) {
       return addCommandCallback('median://onesignal/externalUserId/set', params);
     },
     remove: function (params?: { callback?: string }) {
