@@ -1,5 +1,5 @@
 import { CallbackData } from '../types';
-import { addCommand, addCommandCallback } from '../utils';
+import { addCommandCallback } from '../utils';
 
 type OpenTokJoinParams = {
   apiKey: string;
@@ -11,10 +11,7 @@ type OpenTokJoinParams = {
 const opentok = {
   video: {
     join: function (params: OpenTokJoinParams) {
-      if (params.callback) {
-        return addCommandCallback('median://opentok/video/join', params);
-      }
-      addCommand('median://opentok/video/join', params);
+      return addCommandCallback('median://opentok/video/join', params);
     },
   },
 };

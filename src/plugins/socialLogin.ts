@@ -47,36 +47,36 @@ type AppleSigninParams = {
 
 const socialLogin = {
   facebook: {
-    login: function (params: FacebookLoginParams) {
-      if (params.callback) {
+    login: function (params?: FacebookLoginParams) {
+      if (params?.callback) {
         return addCommandCallback<FacebookLoginData>('median://socialLogin/facebook/login', params);
       }
       addCommand('median://socialLogin/facebook/login', params);
     },
     logout: function (params: CallbackParams) {
-      if (params.callback) {
+      if (params?.callback) {
         return addCommandCallback('median://socialLogin/facebook/logout', params);
       }
       addCommand('median://socialLogin/facebook/logout', params);
     },
   },
   google: {
-    login: function (params: GoogleSigninParams) {
-      if (params.callback) {
+    login: function (params?: GoogleSigninParams) {
+      if (params?.callback) {
         return addCommandCallback<GoogleSigninData>('median://socialLogin/google/login', params);
       }
       addCommand('median://socialLogin/google/login', params);
     },
     logout: function (params: CallbackParams) {
-      if (params.callback) {
+      if (params?.callback) {
         return addCommandCallback('median://socialLogin/google/logout', params);
       }
       addCommand('median://socialLogin/google/logout', params);
     },
   },
   apple: {
-    login: function (params: AppleSigninParams) {
-      if (params.callback) {
+    login: function (params?: AppleSigninParams) {
+      if (params?.callback) {
         return addCommandCallback<AppleSigninData>('median://socialLogin/apple/login', params);
       }
       addCommand('median://socialLogin/apple/login', params);
