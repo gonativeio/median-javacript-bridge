@@ -3,6 +3,7 @@ import { android, general, ios } from './commands';
 import { ShareToAppData } from './plugins/share';
 import { AnyData } from './types';
 import { createTempFunctionName, setMedianCallback } from './utils';
+import { BranchInitializedData } from './plugins/branch';
 
 class Median {
   #listeners: Record<string, Record<string, (...args: AnyData) => void>> = {};
@@ -82,6 +83,7 @@ class Median {
   barcode = plugins.barcode;
   beacon = plugins.beacon;
   braze = plugins.braze;
+  branch = plugins.branch;
   calendar = plugins.calendar;
   card_io = plugins.card_io;
   contacts = plugins.contacts;
@@ -145,6 +147,7 @@ class Median {
   };
 
   appResumed = this.#createListenerProp('_median_app_resumed');
+  branchInitialized = this.#createListenerProp<BranchInitializedData>('_median_branch_initialized');
   deviceShake = this.#createListenerProp('_median_device_shake');
   shareToApp = this.#createListenerProp<ShareToAppData>('_median_share_to_app');
 }

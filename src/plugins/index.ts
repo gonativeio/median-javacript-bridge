@@ -8,6 +8,7 @@ export { default as backgroundLocation } from './backgroundLocation';
 export { default as backgroundMedia } from './backgroundMedia';
 export { default as barcode } from './barcode';
 export { default as beacon } from './beacon';
+export { default as branch } from './branch';
 export { default as braze } from './braze';
 export { default as calendar } from './calendar';
 export { default as card_io } from './card_io';
