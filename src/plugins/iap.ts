@@ -24,6 +24,10 @@ type InAppPurchaseInfo = {
   };
 };
 
+export type InAppPurchaseInfoReadyData = {
+  inAppPurchases: Record<string, AnyData>;
+};
+
 const iap = {
   purchase: function (params: InAppPurchaseParams) {
     const productId = params.productID;

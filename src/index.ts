@@ -1,9 +1,10 @@
 import * as plugins from './plugins';
 import { android, general, ios } from './commands';
+import { BranchInitializedData } from './plugins/branch';
+import { InAppPurchaseInfoReadyData } from './plugins/iap';
 import { ShareToAppData } from './plugins/share';
 import { AnyData } from './types';
 import { createTempFunctionName, setMedianCallback } from './utils';
-import { BranchInitializedData } from './plugins/branch';
 
 class Median {
   #listeners: Record<string, Record<string, (...args: AnyData) => void>> = {};
@@ -149,6 +150,8 @@ class Median {
   appResumed = this.#createListenerProp('_median_app_resumed');
   branchInitialized = this.#createListenerProp<BranchInitializedData>('_median_branch_initialized');
   deviceShake = this.#createListenerProp('_median_device_shake');
+  iapInfoReady = this.#createListenerProp<InAppPurchaseInfoReadyData>('_median_info_ready');
+  iapPurchases = this.#createListenerProp<AnyData>('_median_iap_purchases');
   shareToApp = this.#createListenerProp<ShareToAppData>('_median_share_to_app');
 }
 
