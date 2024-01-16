@@ -123,12 +123,20 @@ class Median {
     return !!window?.webkit?.messageHandlers?.JSBridge || !!window?.JSBridge;
   };
 
-  isAndroid = () => {
-    return !!window?.navigator?.userAgent?.match(/Android/i);
+  isAndroid = async () => {
+    if (!this.isNativeApp()) {
+      return false;
+    }
+    const deviceInfo = await general.deviceInfo();
+    return deviceInfo?.platform === "android";
   };
 
-  isIos = () => {
-    return !!window?.navigator?.userAgent?.match(/iPad|iPhone|iPod/i);
+  isIos = async () => {
+    if (!this.isNativeApp()) {
+      return false;
+    }
+    const deviceInfo = await general.deviceInfo();
+    return deviceInfo?.platform === "ios";
   };
 
   onReady = (callback: () => void) => {
