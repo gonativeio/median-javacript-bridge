@@ -123,6 +123,14 @@ class Median {
     return !!window?.webkit?.messageHandlers?.JSBridge || !!window?.JSBridge;
   };
 
+  isAndroid = () => {
+    return !!window?.navigator?.userAgent?.match(/Android/i);
+  };
+
+  isIos = () => {
+    return !!window?.navigator?.userAgent?.match(/iPad|iPhone|iPod/i);
+  };
+
   onReady = (callback: () => void) => {
     if (typeof callback === 'function') {
       let callbackFunction: (() => void) | null = callback;
