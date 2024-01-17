@@ -67,11 +67,11 @@ export function addCommand(command: string, params?: AnyData, persistCallback?: 
   }
 
   // Android
-  if (window.JSBridge?.postMessage) {
+  if (window?.JSBridge?.postMessage) {
     window.JSBridge.postMessage(JSON.stringify(data));
   }
   // iOS
-  if (window.webkit?.messageHandlers?.JSBridge?.postMessage) {
+  if (window?.webkit?.messageHandlers?.JSBridge?.postMessage) {
     window.webkit.messageHandlers.JSBridge.postMessage(data);
   }
 }
