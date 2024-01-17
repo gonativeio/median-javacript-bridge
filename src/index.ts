@@ -128,7 +128,7 @@ class Median {
 
   getPlatform = async () => {
     if (!this.isNativeApp()) {
-      return "web";
+      return 'web';
     }
     const deviceInfo = await general.deviceInfo();
     return deviceInfo?.platform;
