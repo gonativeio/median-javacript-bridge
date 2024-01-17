@@ -123,20 +123,12 @@ class Median {
     return !!window?.webkit?.messageHandlers?.JSBridge || !!window?.JSBridge;
   };
 
-  isAndroid = async () => {
+  getPlatform = async () => {
     if (!this.isNativeApp()) {
-      return false;
+      return "web";
     }
     const deviceInfo = await general.deviceInfo();
-    return deviceInfo?.platform === "android";
-  };
-
-  isIos = async () => {
-    if (!this.isNativeApp()) {
-      return false;
-    }
-    const deviceInfo = await general.deviceInfo();
-    return deviceInfo?.platform === "ios";
+    return deviceInfo?.platform;
   };
 
   onReady = (callback: () => void) => {
