@@ -126,6 +126,14 @@ class Median {
     return !!window?.webkit?.messageHandlers?.JSBridge || !!window?.JSBridge;
   };
 
+  getPlatform = async () => {
+    if (!this.isNativeApp()) {
+      return "web";
+    }
+    const deviceInfo = await general.deviceInfo();
+    return deviceInfo?.platform;
+  };
+
   onReady = (callback: () => void) => {
     if (typeof callback === 'function') {
       let callbackFunction: (() => void) | null = callback;

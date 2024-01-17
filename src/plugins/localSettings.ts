@@ -1,6 +1,6 @@
 import { addCommand, addCommandCallback } from '../utils';
 
-type LocalPreferencesSaveData = { status: string };
+type LocalPreferencesSaveData = { data?: string; status: string };
 
 type LocalPreferencesSetParams = {
   key: string;
@@ -76,6 +76,20 @@ const localpreferences = {
     },
     delete: function (params: LocalPreferencesDeleteFileParams) {
       addCommand('median://localpreferences/filesystem/delete', params);
+    },
+  },
+  keychain: {
+    set: function (params: LocalPreferencesSetParams) {
+      return addCommandCallback<LocalPreferencesSaveData>('median://localpreferences/keychain/set', params);
+    },
+    get: function (params: LocalPreferencesGetParams) {
+      return addCommandCallback<LocalPreferencesSaveData>('median://localpreferences/keychain/get', params);
+    },
+    delete: function (params: LocalPreferencesDeleteParams) {
+      return addCommandCallback<LocalPreferencesSaveData>('median://localpreferences/keychain/delete', params);
+    },
+    deleteAll: function (params: LocalPreferencesDeleteAllParams) {
+      return addCommandCallback<LocalPreferencesSaveData>('median://localpreferences/keychain/deleteAll', params);
     },
   },
 };
