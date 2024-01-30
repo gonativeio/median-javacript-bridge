@@ -2,8 +2,8 @@ import { addCommand } from '../utils';
 
 const android = {
   geoLocation: {
-    promptAndroidLocationServices: function () {
-      addCommand('median://geoLocation/promptAndroidLocationServices');
+    promptLocationServices: function () {
+      addCommand('median://geoLocation/promptLocationServices');
     },
   },
   screen: {
