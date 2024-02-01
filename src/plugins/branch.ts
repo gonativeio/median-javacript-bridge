@@ -2,7 +2,10 @@ import { CallbackData, CallbackParams } from '../types';
 import { addCommandCallback } from '../utils';
 
 type BranchParamsItem = number | number[] | string | string[];
+
 type BranchParamsData = Record<string, BranchParamsItem | Record<string, BranchParamsItem>>;
+
+type BranchIsInitializedData = { initialized: boolean };
 
 export type BranchInitializedData = CallbackData & {
   data?: BranchParamsData;
@@ -14,6 +17,9 @@ const branch = {
   },
   getLatestParams: function (params: CallbackParams<BranchParamsData>) {
     return addCommandCallback<BranchParamsData>('median://branch/getLatestParams', params);
+  },
+  isInitialized: function (params: CallbackParams<BranchIsInitializedData>) {
+    return addCommandCallback<BranchIsInitializedData>('median://branch/isInitialized', params);
   },
 };
 
