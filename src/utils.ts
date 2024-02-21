@@ -19,17 +19,6 @@ export function createTempFunctionName(prefix = '_median_temp_') {
   return prefix + Math.random().toString(36).slice(2);
 }
 
-export function setMedianCallback(command: string, callbackFunctions: Record<string, (...args: AnyData) => void>) {
-  (window[command as AnyData] as AnyData) = function (...args: AnyData) {
-    Object.keys(callbackFunctions).forEach((key) => {
-      const callbackFunction = callbackFunctions[key];
-      if (typeof callbackFunction === 'function') {
-        callbackFunction(...args);
-      }
-    });
-  };
-}
-
 // GoNativeJSBridgeLibrary.js
 export function addCallbackFunction(callbackFunction: string | ((data?: AnyData) => void), persistCallback?: boolean) {
   if (typeof callbackFunction === 'string') {
@@ -98,5 +87,25 @@ export function addCommandCallback<T = AnyData>(
       };
       addCommand(command, params);
     });
+  }
+}
+
+// Misc
+export function setMedianCallback(command: string, callbackFunctions: Record<string, (...args: AnyData) => void>) {
+  (window[command as AnyData] as AnyData) = function (...args: AnyData) {
+    Object.keys(callbackFunctions).forEach((key) => {
+      const callbackFunction = callbackFunctions[key];
+      if (typeof callbackFunction === 'function') {
+        callbackFunction(...args);
+      }
+    });
+  };
+}
+
+export function setSubscription(callbackName: string, subscribe: boolean) {
+  if (subscribe) {
+    return addCommand('median://events/subscribe', { callbackName });
+  } else {
+    return addCommand('median://events/unsubscribe', { callbackName });
   }
 }
