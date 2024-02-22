@@ -3,8 +3,8 @@ import { addCommand, addCommandCallback } from '../utils';
 
 const ios = {
   window: {
-    open: function (url: string) {
-      addCommand('median://window/open', { url });
+    open: function (url: string, mode?: "blank" | "internal" | "external" | "appbrowser") {
+      addCommand('median://window/open', { url, mode });
     },
     setWindowOpenHideNavbar: function (windowOpenHideNavbar: boolean) {
       addCommand('median://window/setWindowOpenHideNavbar', { windowOpenHideNavbar });
