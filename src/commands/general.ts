@@ -304,9 +304,11 @@ const webview = {
   },
 };
 
+type NewWindowMode = 'blank' | 'internal' | 'external' | 'appbrowser';
+
 const window = {
-  open: function (url: string) {
-    addCommand('median://window/open', { url });
+  open: function (url: string, mode: NewWindowMode = 'blank') {
+    addCommand('median://window/open', { url, mode });
   },
   close: function () {
     addCommand('median://window/close');
