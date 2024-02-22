@@ -10,4 +10,4 @@ See the [docs](https://median.co/docs/npm-package) for installation and usage gu
 
 ### Support
 
-Please visit our [discussion form](https://median.co/discuss) to search for and post new questions. Our community and support engineers will be happy to answer any of your support queries.
+Please visit our [discussion forum](https://median.co/discuss) to search for and post new questions. Our community and support engineers will be happy to answer any of your support queries.
