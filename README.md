@@ -1,59 +1,13 @@
-#  Median JavaScript Bridge
+##  Median JavaScript Bridge
 
-Use this library to use Median JavaScript Bridge methods in your SPA application. This library is framework-agnostic and is designed to work with all major JavaScript frameworks.
-
-For detailed documentation please visit https://median.co/docs/javascript-bridge
-
-## Median.co App Studio
+[Median](https://median.co) is an online tool to convert your mobile-friendly websites into powerful and robust mobile apps. It provides easy ways to interact with the native functionality to build a full-feature app.
 
 Create your app using the Median App Studio at https://median.co/app
 
-## Installation
+### Installation
 
-Install the package using `npm` or `yarn`
+See the [docs](https://median.co/docs/npm-package) for installation and usage guides
 
-    npm install median-js-bridge --save
+### Support
 
-OR
-
-    yarn add median-js-bridge
-
-## Basic usage
-
-    import Median from "median-js-bridge";
-    import React, { useEffect } from "react";
-    
-    const App: React.FC = () => {
-        useEffect(() => {
-            Median.onReady(() => {
-                window.alert("Median app ready!");
-            });
-        }, []);
-    }
-
-## Usage with listeners
-
-    const listenerId = Median.appResumed.addListener(() => {
-        console.log("App resumed callback");
-    });
-
-    Median.appResumed.removeListener(listenerId);
-
-### Share into app plugin
-[Documentation](https://median.co/docs/share-into-app)
-
-    const listenerId = Median.shareToApp.addListener((data) => {
-        console.log(data.url, data.subject);
-    });
-
-    Median.shareToApp.removeListener(listenerId);
-
-### Haptics plugin
-[Documentation](https://median.co/docs/haptics)
-
-    const listenerId = Median.deviceShake.addListener(() => {
-        console.log("device shake callback");
-    });
-
-    Median.deviceShake.removeListener(listenerId);
-
+Please visit our [discussion form](https://median.co/discuss) to search for and post new questions. Our community and support engineers will be happy to answer any of your support queries.
