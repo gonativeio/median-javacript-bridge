@@ -1,13 +1,14 @@
 // rollup.config.js
-import typescript from '@rollup/plugin-typescript';
+
 import terser from '@rollup/plugin-terser';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 
 export default {
-  input: 'src/index.ts',
+  input: 'dist/index.js',
   output: {
-    dir: 'dist',
-    format: 'umd',
-    name: 'Median'
+    format: 'iife',
+    name: 'Median',
+    file: 'dist/median.min.js'
   },
-  plugins: [typescript(), terser()],
+  plugins: [nodeResolve(), terser()],
 };

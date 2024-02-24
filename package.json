@@ -7,7 +7,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rimraf dist && rollup -c rollup.config.js",
+    "build": "rimraf dist && tsc && rollup -c rollup.config.js",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint --fix --ext .js,.ts src/",
     "prepublishOnly": "npm run lint",
@@ -29,8 +29,8 @@
   },
   "license": "ISC",
   "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
-    "@rollup/plugin-typescript": "^11.1.6",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "@typescript-eslint/parser": "^6.11.0",
     "eslint": "^8.53.0",
