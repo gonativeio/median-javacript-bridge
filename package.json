@@ -3,11 +3,10 @@
   "version": "2.0.1",
   "description": "Median bridge and utilities for JS web frameworks",
   "main": "dist/index.js",
-  "type": "module",
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rimraf dist && tsc && rollup -c rollup.config.js",
+    "build": "rimraf dist && tsc && rollup -c rollup.config.mjs",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint --fix --ext .js,.ts src/",
     "prepublishOnly": "npm run lint",
