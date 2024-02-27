@@ -7,8 +7,8 @@ type ModalClosedData = {
 
 type ModalLaunchParams = {
   url: string;
-  autoClosePath: string;
-  callback: (data: ModalClosedData) => void;
+  autoClosePath?: string;
+  callback?: (data: ModalClosedData) => void;
 };
 
 const modal = {
