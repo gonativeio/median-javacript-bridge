@@ -1,59 +1,13 @@
-#  Median JavaScript Bridge
+##  Median JavaScript Bridge
 
-Use this library to use Median JavaScript Bridge methods in your SPA application. This library is framework-agnostic and is designed to work with all major JavaScript frameworks.
+[Median](https://median.co) is an online platform that streamlines webview app development, enabling web developers, startups, and large enterprise customers to effortlessly create iOS and Android apps powered by their existing web content. Median supports building full-feature apps with access to native functionality and third-party integrations. 
 
-For detailed documentation please visit https://median.co/docs/javascript-bridge
+Get started by creating an app using the Median App Studio at https://median.co/app
 
-## Median.co App Studio
+### Installation
 
-Create your app using the Median App Studio at https://median.co/app
+See our official [docs](https://median.co/docs/npm-package) for installation and usage guidelines.
 
-## Installation
+### Support
 
-Install the package using `npm` or `yarn`
-
-    npm install median-js-bridge --save
-
-OR
-
-    yarn add median-js-bridge
-
-## Basic usage
-
-    import Median from "median-js-bridge";
-    import React, { useEffect } from "react";
-    
-    const App: React.FC = () => {
-        useEffect(() => {
-            Median.onReady(() => {
-                window.alert("Median app ready!");
-            });
-        }, []);
-    }
-
-## Usage with listeners
-
-    const listenerId = Median.appResumed.addListener(() => {
-        console.log("App resumed callback");
-    });
-
-    Median.appResumed.removeListener(listenerId);
-
-### Share into app plugin
-[Documentation](https://median.co/docs/share-into-app)
-
-    const listenerId = Median.shareToApp.addListener((data) => {
-        console.log(data.url, data.subject);
-    });
-
-    Median.shareToApp.removeListener(listenerId);
-
-### Haptics plugin
-[Documentation](https://median.co/docs/haptics)
-
-    const listenerId = Median.deviceShake.addListener(() => {
-        console.log("device shake callback");
-    });
-
-    Median.deviceShake.removeListener(listenerId);
-
+Please visit our [discussion forum](https://median.co/discuss) to search for and post new questions. Our community and support engineers will be happy to answer any of your queries. We also offer options for paid support which can be accessed on the "Support" tab when accessing your app within the App Studio.

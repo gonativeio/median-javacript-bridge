@@ -1,9 +1,10 @@
 import { CallbackParams, PermissionStatusData } from '../types';
 import { addCommand, addCommandCallback } from '../utils';
+import { NewWindowMode } from './general';
 
 const ios = {
   window: {
-    open: function (url: string, mode?: "blank" | "internal" | "external" | "appbrowser") {
+    open: function (url: string, mode: NewWindowMode = "blank") {
       addCommand('median://window/open', { url, mode });
     },
     setWindowOpenHideNavbar: function (windowOpenHideNavbar: boolean) {
