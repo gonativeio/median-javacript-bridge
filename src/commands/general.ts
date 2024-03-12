@@ -304,7 +304,7 @@ const webview = {
   },
 };
 
-type NewWindowMode = 'blank' | 'internal' | 'external' | 'appbrowser';
+export type NewWindowMode = 'blank' | 'internal' | 'external' | 'appbrowser';
 
 const window = {
   open: function (url: string, mode: NewWindowMode = 'blank') {
