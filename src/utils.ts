@@ -102,10 +102,10 @@ export function setMedianCallback(command: string, callbackFunctions: Record<str
   };
 }
 
-export function setSubscription(callbackName: string, subscribe: boolean) {
+export function setSubscription(evnetName: string, subscribe: boolean) {
   if (subscribe) {
-    return addCommand('median://events/subscribe', { callbackName });
+    return addCommand('median://events/subscribe', { evnetName });
   } else {
-    return addCommand('median://events/unsubscribe', { callbackName });
+    return addCommand('median://events/unsubscribe', { evnetName });
   }
 }
