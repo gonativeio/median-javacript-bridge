@@ -4,7 +4,7 @@ import { BranchInitializedData } from './plugins/branch';
 import { InAppPurchaseInfoReadyData } from './plugins/iap';
 import { ShareToAppData } from './plugins/share';
 import { AnyData } from './types';
-import { createTempFunctionName, setMedianCallback } from './utils';
+import { createTempFunctionName, setMedianCallback, setSubscription } from './utils';
 
 class Median {
   #listeners: Record<string, Record<string, (...args: AnyData) => void>> = {};
@@ -21,6 +21,7 @@ class Median {
     callbackFunctions[functionId] = callback;
 
     setMedianCallback(functionName, callbackFunctions);
+    setSubscription(functionName, true);
 
     return functionId;
   };
@@ -35,6 +36,7 @@ class Median {
     delete callbackFunctions[functionId];
 
     setMedianCallback(functionName, callbackFunctions);
+    setSubscription(functionName, false);
   };
 
   #createListenerProp = <T = void>(functionName: string) => {
@@ -160,6 +162,7 @@ class Median {
   deviceShake = this.#createListenerProp('_median_device_shake');
   iapInfoReady = this.#createListenerProp<InAppPurchaseInfoReadyData>('_median_info_ready');
   iapPurchases = this.#createListenerProp<AnyData>('_median_iap_purchases');
+  oneSignalPushOpened = this.#createListenerProp<AnyData>('_median_onesignal_push_opened');
   shareToApp = this.#createListenerProp<ShareToAppData>('_median_share_to_app');
 }
 
