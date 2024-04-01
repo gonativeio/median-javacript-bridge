@@ -1,4 +1,4 @@
-import { AnyData } from '../types';
+import { AnyData, CallbackParams } from '../types';
 import { addCommand, addCommandCallback } from '../utils';
 
 type InAppPurchaseParams = Record<string, AnyData> & {
@@ -24,6 +24,23 @@ type InAppPurchaseInfo = {
   };
 };
 
+type InAppPurchasePurchases = {
+  activeSubscriptions: string[];
+  hasValidReceipt: boolean;
+  platform: string;
+  allPurchases: (Record<string, AnyData> & {
+    purchaseDateString: string;
+    transactionIdentifier: string;
+    webOrderLineItemID: number;
+    originalPurchaseDateString: string;
+    quantity: 1;
+    productIdentifier: string;
+    originalTransactionIdentifier: string;
+    cancellationDateString: string;
+    subscriptionExpirationDateString: string;
+  })[];
+};
+
 export type InAppPurchaseInfoReadyData = {
   inAppPurchases: Record<string, AnyData>;
 };
@@ -33,6 +50,9 @@ const iap = {
     const productId = params.productID;
     params.productID = null;
     return addCommandCallback<InAppPurchaseData>('median://purchase/' + productId, params);
+  },
+  purchases: function (params: CallbackParams) {
+    return addCommandCallback<InAppPurchasePurchases>('median://iap/purchases', params);
   },
   manageSubscription: function (params: { productID: string }) {
     addCommand('median://iap/manageSubscription', params);
