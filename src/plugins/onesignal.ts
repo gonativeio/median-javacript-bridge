@@ -103,6 +103,11 @@ const onesignal = {
   enableForegroundNotifications: function (enabled: boolean) {
     addCommand('median://onesignal/enableForegroundNotifications', { enabled });
   },
+  badge: {
+    set: function (count: number | string) {
+      addCommand('median://onesignal/badge/set', { count });
+    },
+  },
 };
 
 export default onesignal;

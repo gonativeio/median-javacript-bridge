@@ -4,6 +4,7 @@ import { AuthDeleteParams, AuthGetParams, AuthSaveParams, AuthStatusData } from 
 
 type Auth0LoginUniveralData = {
   idToken: string;
+  accessToken: string;
   scope?: string;
   error?: string;
 };

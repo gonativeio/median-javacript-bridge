@@ -122,6 +122,7 @@ class Median {
     filesystem: plugins.localpreferences.filesystem,
   };
   twilio = plugins.twilio;
+  zoom = plugins.zoom;
 
   // Median Functions
   isNativeApp = () => {
