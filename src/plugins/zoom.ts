@@ -7,7 +7,7 @@ type ZoomJoinParams = {
   password?: string;
 };
 
-const twilio = {
+const zoom = {
   video: {
     join: function (params: ZoomJoinParams) {
       return addCommandCallback("median://zoom/join", params);
@@ -15,4 +15,4 @@ const twilio = {
   },
 };
 
-export default twilio;
+export default zoom;
