@@ -10,7 +10,7 @@ type ZoomJoinParams = {
 const zoom = {
   video: {
     join: function (params: ZoomJoinParams) {
-      return addCommandCallback("median://zoom/join", params);
+      return addCommandCallback('median://zoom/join', params);
     },
   },
 };
