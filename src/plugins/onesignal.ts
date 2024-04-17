@@ -33,7 +33,7 @@ type OneSignalInAppMessageData = {
 const onesignal = {
   /**
    * @deprecated Use Median.onesignal.info() instead
-   */ 
+   */
   run: {
     onesignalInfo: function () {
       addCommand('median://onesignal/onesignalInfo');
