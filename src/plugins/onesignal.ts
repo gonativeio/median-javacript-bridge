@@ -31,13 +31,19 @@ type OneSignalInAppMessageData = {
 };
 
 const onesignal = {
+  /**
+   * @deprecated Use Median.onesignal.info() instead
+   */ 
   run: {
     onesignalInfo: function () {
-      addCommand('median://run/gonative_onesignal_info');
+      addCommand('median://onesignal/onesignalInfo');
     },
   },
   onesignalInfo: function (params: CallbackParams<OneSignalInfo>) {
-    return addCommandCallback<OneSignalInfo>('median://run/gonative_onesignal_info', params, true);
+    return addCommandCallback<OneSignalInfo>('median://onesignal/onesignalInfo', params, true);
+  },
+  info: function (params: CallbackParams<OneSignalInfo>) {
+    return addCommandCallback<OneSignalInfo>('median://onesignal/onesignalInfo', params, true);
   },
   register: function () {
     addCommand('median://onesignal/register');
