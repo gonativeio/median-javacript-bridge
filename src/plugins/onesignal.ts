@@ -114,6 +114,12 @@ const onesignal = {
       addCommand('median://onesignal/badge/set', { count });
     },
   },
+  login: function (params: CallbackParams<CallbackData> & { externalId: string | number }) {
+    addCommand('median://onesignal/login', params);
+  },
+  logout: function (params: CallbackParams<CallbackData>) {
+    addCommand('median://onesignal/logout', params);
+  },
 };
 
 export default onesignal;
