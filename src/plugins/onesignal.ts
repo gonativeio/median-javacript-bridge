@@ -115,10 +115,10 @@ const onesignal = {
     },
   },
   login: function (externalId: string | number, params: CallbackParams<CallbackData>) {
-    addCommand('median://onesignal/login', { externalId, ...params });
+    return addCommandCallback<CallbackData>('median://onesignal/login', { externalId, ...params });
   },
   logout: function (params: CallbackParams<CallbackData>) {
-    addCommand('median://onesignal/logout', params);
+    return addCommandCallback<CallbackData>('median://onesignal/logout', params);
   },
 };
 
