@@ -114,7 +114,7 @@ const onesignal = {
       addCommand('median://onesignal/badge/set', { count });
     },
   },
-  login: function (externalId: string | number, params: CallbackParams<CallbackData>) {
+  login: function (externalId: string | number, params: CallbackParams<CallbackData> = {}) {
     return addCommandCallback<CallbackData>('median://onesignal/login', { externalId, ...params });
   },
   logout: function (params: CallbackParams<CallbackData>) {
