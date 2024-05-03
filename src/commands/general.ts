@@ -32,6 +32,15 @@ const connectivity = {
   },
 };
 
+const contextMenu = {
+  setEnabled: function (enabled: boolean) {
+    addCommand('median://contextMenu/setEnabled', { enabled });
+  },
+  setLinkActions: function (actions: string[]) {
+    addCommand('median://contextMenu/setLinkActions', { actions });
+  },
+};
+
 export type DeviceInfo = {
   platform: 'ios' | 'android';
   appId: string;
@@ -319,6 +328,7 @@ export {
   clipboard,
   config,
   connectivity,
+  contextMenu,
   deviceInfo,
   internalExternal,
   keyboard,
