@@ -1,16 +1,16 @@
 import { AnyData, CallbackParams } from '../types';
-import { addCommand, addCommandCallback } from '../utils';
-import { AuthDeleteParams, AuthGetParams, AuthSaveParams, AuthStatusData } from './auth';
+import { addCommandCallback } from '../utils';
+import { AuthStatusData } from './auth';
 
-type Auth0LoginUniveralData = {
+type Auth0LoginData = {
   idToken: string;
   accessToken: string;
+  refreshToken?: string;
   scope?: string;
   error?: string;
 };
 
-type Auth0LoginUniveralParams = {
-  callback?: (data: Auth0LoginUniveralData) => void;
+type Auth0LoginParams = CallbackParams<Auth0LoginData> & {
   enableBiometrics?: boolean;
 };
 
@@ -20,29 +20,23 @@ type Auth0ProfileParams = {
 };
 
 const auth0 = {
-  loginUniversal: function (params: Auth0LoginUniveralParams) {
-    addCommand('median://auth0/loginUniversal', params);
+  login: function (params: Auth0LoginParams) {
+    return addCommandCallback<Auth0LoginData>('median://auth0/login', params);
   },
   logout: function (params: CallbackParams<{ error?: string }>) {
-    addCommand('median://auth0/logout', params);
+    return addCommandCallback<{ error?: string }>('median://auth0/logout', params);
   },
   status: function (params: CallbackParams<AuthStatusData>) {
     return addCommandCallback<AuthStatusData>('median://auth0/status', params);
   },
-  save: function (params: AuthSaveParams) {
-    if (typeof params.secret !== 'string') {
-      params.secret = JSON.stringify(params.secret);
-    }
-    addCommand('median://auth0/save', params);
-  },
   profile: function (params: Auth0ProfileParams) {
-    return addCommandCallback<Auth0LoginUniveralData>('median://auth0/profile', params);
+    return addCommandCallback<Auth0LoginData>('median://auth0/profile', params);
   },
-  get: function (params: AuthGetParams) {
-    addCommand('median://auth0/get', params);
+  getCredentials: function (params: CallbackParams<Auth0LoginData>) {
+    return addCommandCallback<Auth0LoginData>('median://auth0/getCredentials', params);
   },
-  delete: function (params: AuthDeleteParams) {
-    addCommand('median://auth0/delete', params);
+  renew: function (refreshToken?: string) {
+    return addCommandCallback<Auth0LoginData>('median://auth0/renew', { refreshToken });
   },
 };
 
