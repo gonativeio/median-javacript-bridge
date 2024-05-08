@@ -32,11 +32,13 @@ const connectivity = {
   },
 };
 
+type ContextMenuLinkAction = 'copyLink' | 'openExternal';
+
 const contextMenu = {
   setEnabled: function (enabled: boolean) {
     addCommand('median://contextMenu/setEnabled', { enabled });
   },
-  setLinkActions: function (actions: string[]) {
+  setLinkActions: function (actions: ContextMenuLinkAction[]) {
     addCommand('median://contextMenu/setLinkActions', { actions });
   },
 };
