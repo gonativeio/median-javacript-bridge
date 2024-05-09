@@ -1,5 +1,5 @@
 import { CallbackParams, CallbackData } from '../types';
-import { addCommand, addCommandCallback } from '../utils';
+import { addCommandCallback } from '../utils';
 
 export type AuthStatusData = {
   biometryType: string;
@@ -8,20 +8,19 @@ export type AuthStatusData = {
   error: string;
 };
 
-export type AuthSaveParams = {
-  callback?: (data: CallbackData) => void;
+export type AuthSaveParams = CallbackParams<CallbackData> & {
   secret: string;
 };
 
-export type AuthGetParams = {
-  callback?: (data: { success: boolean; error?: string; secret?: string }) => void;
+export type AuthGetData = CallbackData & {
+  secret?: string;
+};
+
+export type AuthGetParams = CallbackParams<AuthGetData> & {
   prompt?: string;
 };
 
-export type AuthDeleteParams = {
-  callback?: (data: { success: boolean; error?: string; secret?: string }) => void;
-  prompt?: string;
-};
+export type AuthDeleteParams = CallbackParams<CallbackData>;
 
 const auth = {
   status: function (params: CallbackParams<AuthStatusData>) {
@@ -31,13 +30,13 @@ const auth = {
     if (typeof params.secret !== 'string') {
       params.secret = JSON.stringify(params.secret);
     }
-    addCommand('median://auth/save', params);
+    return addCommandCallback<CallbackData>('median://auth/save', params);
   },
   get: function (params: AuthGetParams) {
-    addCommand('median://auth/get', params);
+    return addCommandCallback<AuthGetData>('median://auth/get', params);
   },
   delete: function (params: AuthDeleteParams) {
-    addCommand('median://auth/delete', params);
+    return addCommandCallback<CallbackData>('median://auth/delete', params);
   },
 };
 
