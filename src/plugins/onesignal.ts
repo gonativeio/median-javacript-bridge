@@ -36,14 +36,14 @@ const onesignal = {
    */
   run: {
     onesignalInfo: function () {
-      addCommand('median://onesignal/onesignalInfo');
+      addCommand('median://onesignal/info', { callback: 'median_onesignal_info' });
     },
   },
   onesignalInfo: function (params: CallbackParams<OneSignalInfo>) {
-    return addCommandCallback<OneSignalInfo>('median://onesignal/onesignalInfo', params, true);
+    return addCommandCallback<OneSignalInfo>('median://onesignal/info', params, true);
   },
   info: function (params: CallbackParams<OneSignalInfo>) {
-    return addCommandCallback<OneSignalInfo>('median://onesignal/onesignalInfo', params, true);
+    return addCommandCallback<OneSignalInfo>('median://onesignal/info', params, true);
   },
   register: function () {
     addCommand('median://onesignal/register');
