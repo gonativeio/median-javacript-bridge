@@ -1,5 +1,5 @@
 import { CallbackData, CallbackParams } from '../types';
-import { addCommand, addCommandCallback } from '../utils';
+import { addCallbackFunction, addCommand, addCommandCallback } from '../utils';
 
 type OneSignalInfo = {
   oneSignalUserId: string;
@@ -94,7 +94,8 @@ const onesignal = {
     resumeInAppMessages: function () {
       addCommand('median://onesignal/iam/pauseInAppMessages?pause=false');
     },
-    setInAppMessageClickHandler: function (handler: (data: OneSignalInAppMessageData) => void) {
+    setInAppMessageClickHandler: function (handlerFunction: (data: OneSignalInAppMessageData) => void) {
+      const handler = addCallbackFunction(handlerFunction, true);
       addCommand('median://onesignal/iam/setInAppMessageClickHandler', { handler });
     },
   },
