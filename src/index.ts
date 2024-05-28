@@ -165,6 +165,10 @@ class Median {
   iapPurchases = this.#createListenerProp<AnyData>('_median_iap_purchases');
   oneSignalPushOpened = this.#createListenerProp<AnyData>('_median_onesignal_push_opened');
   shareToApp = this.#createListenerProp<ShareToAppData>('_median_share_to_app');
+
+  jsNavigation = {
+    url: this.#createListenerProp<{ url: string }>('_median_url_changed'),
+  };
 }
 
 export default new Median();
