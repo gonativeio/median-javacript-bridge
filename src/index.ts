@@ -36,7 +36,9 @@ class Median {
     delete callbackFunctions[functionId];
 
     setMedianCallback(functionName, callbackFunctions);
-    setSubscription(functionName, false);
+    if (Object.keys(callbackFunctions).length === 0) {
+      setSubscription(functionName, false);
+    }
   };
 
   #createListenerProp = <T = void>(functionName: string) => {
