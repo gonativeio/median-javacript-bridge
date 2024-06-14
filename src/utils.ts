@@ -90,22 +90,25 @@ export function addCommandCallback<T = AnyData>(
   }
 }
 
-// Misc
-export function setMedianCallback(command: string, callbackFunctions: Record<string, (...args: AnyData) => void>) {
-  (window[command as AnyData] as AnyData) = function (...args: AnyData) {
-    Object.keys(callbackFunctions).forEach((key) => {
-      const callbackFunction = callbackFunctions[key];
-      if (typeof callbackFunction === 'function') {
-        callbackFunction(...args);
+// Events
+export function createListener<T = void>(eventName: string) {
+  return {
+    addListener: (callbackFunction: (data: T) => void) => {
+      if (typeof callbackFunction !== 'function') {
+        return '';
       }
-    });
-  };
-}
 
-export function setSubscription(eventName: string, subscribe: boolean) {
-  if (subscribe) {
-    return addCommand('median://events/subscribe', { eventName });
-  } else {
-    return addCommand('median://events/unsubscribe', { eventName });
-  }
+      const callback = addCallbackFunction(callbackFunction, true);
+      addCommand('median://events/subscribe', { eventName, callback });
+      return callback;
+    },
+    removeListener: (callback: string) => {
+      if (typeof callback !== 'string') {
+        return;
+      }
+
+      delete window[callback as AnyData];
+      addCommand('median://events/unsubscribe', { eventName, callback });
+    },
+  };
 }

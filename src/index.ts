@@ -4,54 +4,9 @@ import { BranchInitializedData } from './plugins/branch';
 import { InAppPurchaseInfoReadyData } from './plugins/iap';
 import { ShareToAppData } from './plugins/share';
 import { AnyData } from './types';
-import { createTempFunctionName, setMedianCallback, setSubscription } from './utils';
+import { createListener } from './utils';
 
 class Median {
-  #listeners: Record<string, Record<string, (...args: AnyData) => void>> = {};
-
-  #addListener = <T>(functionName: string, callback: (data: T) => void) => {
-    const functionId = createTempFunctionName(functionName);
-
-    if (typeof callback !== 'function') {
-      return functionId;
-    }
-
-    this.#listeners[functionName] = this.#listeners[functionName] || {};
-    const callbackFunctions = this.#listeners[functionName];
-    callbackFunctions[functionId] = callback;
-
-    setMedianCallback(functionName, callbackFunctions);
-    setSubscription(functionName, true);
-
-    return functionId;
-  };
-
-  #removeListener = (functionName: string, functionId: string) => {
-    if (!functionName || !functionId) {
-      return;
-    }
-
-    this.#listeners[functionName] = this.#listeners[functionName] || {};
-    const callbackFunctions = this.#listeners[functionName];
-    delete callbackFunctions[functionId];
-
-    setMedianCallback(functionName, callbackFunctions);
-    if (Object.keys(callbackFunctions).length === 0) {
-      setSubscription(functionName, false);
-    }
-  };
-
-  #createListenerProp = <T = void>(functionName: string) => {
-    return {
-      addListener: (callback: (data: T) => void) => {
-        return this.#addListener<T>(functionName, callback);
-      },
-      removeListener: (functionId: string) => {
-        return this.#removeListener(functionName, functionId);
-      },
-    };
-  };
-
   // General
   ios = ios;
   android = android;
@@ -160,16 +115,16 @@ class Median {
     }
   };
 
-  appResumed = this.#createListenerProp('_median_app_resumed');
-  branchInitialized = this.#createListenerProp<BranchInitializedData>('_median_branch_initialized');
-  deviceShake = this.#createListenerProp('_median_device_shake');
-  iapInfoReady = this.#createListenerProp<InAppPurchaseInfoReadyData>('_median_info_ready');
-  iapPurchases = this.#createListenerProp<AnyData>('_median_iap_purchases');
-  oneSignalPushOpened = this.#createListenerProp<AnyData>('_median_onesignal_push_opened');
-  shareToApp = this.#createListenerProp<ShareToAppData>('_median_share_to_app');
+  appResumed = createListener('_median_app_resumed');
+  branchInitialized = createListener<BranchInitializedData>('_median_branch_initialized');
+  deviceShake = createListener('_median_device_shake');
+  iapInfoReady = createListener<InAppPurchaseInfoReadyData>('_median_info_ready');
+  iapPurchases = createListener<AnyData>('_median_iap_purchases');
+  oneSignalPushOpened = createListener<AnyData>('_median_onesignal_push_opened');
+  shareToApp = createListener<ShareToAppData>('_median_share_to_app');
 
   jsNavigation = {
-    url: this.#createListenerProp<{ url: string }>('_median_url_changed'),
+    url: createListener<{ url: string }>('_median_url_changed'),
   };
 }
 
