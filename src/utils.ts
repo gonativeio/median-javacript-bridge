@@ -69,9 +69,9 @@ export function addCommandCallback<T = AnyData>(
   command: string,
   params?: AnyData,
   persistCallback?: boolean
-): Promise<T> | undefined {
+): Promise<T> {
   if (params?.callback || params?.callbackFunction || params?.statuscallback) {
-    addCommand(command, params, persistCallback);
+    return addCommand(command, params, persistCallback) as AnyData;
   } else {
     const tempFunctionName = createTempFunctionName();
 
@@ -80,9 +80,13 @@ export function addCommandCallback<T = AnyData>(
     }
 
     params.callback = tempFunctionName;
-    return new Promise(function (resolve) {
+    return new Promise(function (resolve, reject) {
       (window[tempFunctionName as AnyData] as AnyData) = function (data: T) {
-        resolve(data);
+        if (data && typeof data === 'object' && 'error' in data && typeof data.error === 'string') {
+          reject(data);
+        } else {
+          resolve(data);
+        }
         delete window[tempFunctionName as AnyData];
       };
       addCommand(command, params);
