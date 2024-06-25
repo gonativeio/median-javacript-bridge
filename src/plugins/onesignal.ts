@@ -1,22 +1,34 @@
 import { CallbackData, CallbackParams } from '../types';
 import { addCallbackFunction, addCommand, addCommandCallback } from '../utils';
 
+type OneSignalInfoSubscription = {
+  id: string;
+  optedIn: boolean;
+  token: string;
+};
+
 type OneSignalInfo = {
-  oneSignalUserId: string;
-  oneSignalPushToken: string;
-  oneSignalSubscribed: boolean;
-  oneSignalRequiresUserPrivacyConsent: boolean;
-  platform: string;
   appId: string;
   appVersion: string;
+  appVersionCode: number;
   distribution: string;
+  deviceName: string;
+  externalId: string;
   hardware: string;
   installationId: string;
+  isFirstLaunch: boolean;
   language: string;
+  legacy: boolean;
   model: string;
+  oneSignalId: string;
   os: string;
   osVersion: string;
+  platform: string;
+  publicKey: string;
+  requiresUserPrivacyConsent: boolean;
+  subscription: OneSignalInfoSubscription;
   timeZone: string;
+  userConsentGiven: boolean;
 } & Record<string, string | boolean | number>;
 
 type OneSignalGetTagsData = CallbackData & {
@@ -35,90 +47,90 @@ const onesignal = {
    * @deprecated Use Median.onesignal.info() instead
    */
   run: {
-    onesignalInfo: function () {
+    onesignalInfo: function() {
       addCommand('median://onesignal/info', { callback: 'median_onesignal_info' });
     },
   },
-  onesignalInfo: function (params: CallbackParams<OneSignalInfo>) {
+  onesignalInfo: function(params: CallbackParams<OneSignalInfo>) {
     return addCommandCallback<OneSignalInfo>('median://onesignal/info', params, true);
   },
-  info: function (params: CallbackParams<OneSignalInfo>) {
+  info: function(params: CallbackParams<OneSignalInfo>) {
     return addCommandCallback<OneSignalInfo>('median://onesignal/info', params, true);
   },
-  register: function () {
+  register: function() {
     addCommand('median://onesignal/register');
   },
   userPrivacyConsent: {
-    grant: function () {
+    grant: function() {
       addCommand('median://onesignal/userPrivacyConsent/grant');
     },
-    revoke: function () {
+    revoke: function() {
       addCommand('median://onesignal/userPrivacyConsent/revoke');
     },
   },
   tags: {
-    getTags: function (params: CallbackParams<OneSignalGetTagsData>) {
+    getTags: function(params: CallbackParams<OneSignalGetTagsData>) {
       return addCommandCallback<OneSignalGetTagsData>('median://onesignal/tags/get', params);
     },
-    setTags: function (params: CallbackParams<CallbackData> & { tags: Record<string, string> }) {
+    setTags: function(params: CallbackParams<CallbackData> & { tags: Record<string, string> }) {
       addCommand('median://onesignal/tags/set', params);
     },
-    deleteTags: function (params: CallbackParams<CallbackData> & { tags?: string[] }) {
+    deleteTags: function(params: CallbackParams<CallbackData> & { tags?: string[] }) {
       addCommand('median://onesignal/tags/delete', params);
     },
   },
-  showTagsUI: function () {
+  showTagsUI: function() {
     addCommand('median://onesignal/showTagsUI');
   },
-  promptLocation: function () {
+  promptLocation: function() {
     addCommand('median://onesignal/promptLocation');
   },
   iam: {
-    addTrigger: function (params: { key: string; value: string }) {
+    addTrigger: function(params: { key: string; value: string }) {
       addCommand('median://onesignal/iam/addTrigger', params);
     },
-    addTriggers: function (params: Record<string, string>) {
+    addTriggers: function(params: Record<string, string>) {
       addCommand('median://onesignal/iam/addTriggers', params);
     },
-    removeTriggerForKey: function (key: string) {
+    removeTriggerForKey: function(key: string) {
       const params = { key: key };
       addCommand('median://onesignal/iam/removeTriggerForKey', params);
     },
-    getTriggerValueForKey: function (key: string) {
+    getTriggerValueForKey: function(key: string) {
       const params = { key: key };
       addCommand('median://onesignal/iam/getTriggerValueForKey', params);
     },
-    pauseInAppMessages: function () {
+    pauseInAppMessages: function() {
       addCommand('median://onesignal/iam/pauseInAppMessages?pause=true');
     },
-    resumeInAppMessages: function () {
+    resumeInAppMessages: function() {
       addCommand('median://onesignal/iam/pauseInAppMessages?pause=false');
     },
-    setInAppMessageClickHandler: function (handlerFunction: (data: OneSignalInAppMessageData) => void) {
+    setInAppMessageClickHandler: function(handlerFunction: (data: OneSignalInAppMessageData) => void) {
       const handler = addCallbackFunction(handlerFunction, true);
       addCommand('median://onesignal/iam/setInAppMessageClickHandler', { handler });
     },
   },
   externalUserId: {
-    set: function (params: CallbackParams<CallbackData> & { externalId: string | number }) {
+    set: function(params: CallbackParams<CallbackData> & { externalId: string | number }) {
       return addCommandCallback<CallbackData>('median://onesignal/externalUserId/set', params);
     },
-    remove: function (params: CallbackParams<CallbackData>) {
+    remove: function(params: CallbackParams<CallbackData>) {
       return addCommandCallback<CallbackData>('median://onesignal/externalUserId/remove', params);
     },
   },
-  enableForegroundNotifications: function (enabled: boolean) {
+  enableForegroundNotifications: function(enabled: boolean) {
     addCommand('median://onesignal/enableForegroundNotifications', { enabled });
   },
   badge: {
-    set: function (count: number | string) {
+    set: function(count: number | string) {
       addCommand('median://onesignal/badge/set', { count });
     },
   },
-  login: function (externalId: string | number, params: CallbackParams<CallbackData> = {}) {
+  login: function(externalId: string | number, params: CallbackParams<CallbackData> = {}) {
     return addCommandCallback<CallbackData>('median://onesignal/login', { externalId, ...params });
   },
-  logout: function (params: CallbackParams<CallbackData>) {
+  logout: function(params: CallbackParams<CallbackData>) {
     return addCommandCallback<CallbackData>('median://onesignal/logout', params);
   },
 };
