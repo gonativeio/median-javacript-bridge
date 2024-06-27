@@ -57,7 +57,7 @@ export function addCommand(command: string, params?: AnyData, persistCallback?: 
 
   // Android
   if (window?.JSBridge?.postMessage) {
-    window.JSBridge.postMessage(typeof data === "string" ? data : JSON.stringify(data));
+    window.JSBridge.postMessage(typeof data === 'string' ? data : JSON.stringify(data));
   }
   // iOS
   if (window?.webkit?.messageHandlers?.JSBridge?.postMessage) {
@@ -82,10 +82,7 @@ export function addCommandCallback<T = AnyData>(
     params.callback = tempFunctionName;
     return new Promise(function (resolve, reject) {
       (window[tempFunctionName as AnyData] as AnyData) = function (data: T) {
-        if (
-          typeof data === 'object' && 
-          typeof data?.error === 'string'
-        ) {
+        if (typeof data === 'object' && typeof data?.error === 'string') {
           reject(data);
         } else {
           resolve(data);
