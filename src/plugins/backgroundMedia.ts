@@ -1,4 +1,4 @@
-import { CallbackParams } from '../types';
+import { CallbackData, CallbackParams } from '../types';
 import { addCommand, addCommandCallback } from '../utils';
 
 type BackgroundMediaTrack = {
@@ -29,10 +29,10 @@ const backgroundMedia = {
     if (typeof params === 'number') {
       params = { time: params };
     }
-    addCommand('median://backgroundMedia/playTrack', params);
+    return addCommandCallback<CallbackData>('median://backgroundMedia/playTrack', { ...params });
   },
   streamPlaylist: function (params: BackgroundMediaStreamPlaylistParams) {
-    addCommand('median://backgroundMedia/streamPlaylist', params);
+    return addCommandCallback<CallbackData>('median://backgroundMedia/streamPlaylist', { ...params });
   },
   pause: function () {
     addCommand('median://backgroundMedia/pause');

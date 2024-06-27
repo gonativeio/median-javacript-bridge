@@ -231,7 +231,7 @@ const share = {
   sharePage: function (params: { url: string; text?: string }) {
     addCommand('median://share/sharePage', params);
   },
-  downloadFile: function (params: { url: string; filename?: string }) {
+  downloadFile: function (params: { url: string; filename?: string; open?: boolean }) {
     addCommand('median://share/downloadFile', params);
   },
   downloadImage: function (params: { url: string }) {
