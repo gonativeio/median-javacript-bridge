@@ -1,22 +1,37 @@
 import { CallbackData, CallbackParams } from '../types';
 import { addCallbackFunction, addCommand, addCommandCallback } from '../utils';
 
+type OneSignalSubscription = {
+  id: string;
+  optedIn: boolean;
+  token: string;
+};
+
+/**
+ * Only represents the V5 plugin response. For legacy plugin please see our docs
+ */
 type OneSignalInfo = {
-  oneSignalUserId: string;
-  oneSignalPushToken: string;
-  oneSignalSubscribed: boolean;
-  oneSignalRequiresUserPrivacyConsent: boolean;
-  platform: string;
   appId: string;
   appVersion: string;
+  appVersionCode: number;
   distribution: string;
+  deviceName: string;
+  externalId: string;
   hardware: string;
   installationId: string;
+  isFirstLaunch: boolean;
   language: string;
+  legacy: boolean;
   model: string;
+  oneSignalId: string;
   os: string;
   osVersion: string;
+  platform: string;
+  publicKey: string;
+  requiresUserPrivacyConsent: boolean;
+  subscription: OneSignalSubscription;
   timeZone: string;
+  userConsentGiven: boolean;
 } & Record<string, string | boolean | number>;
 
 type OneSignalGetTagsData = CallbackData & {
