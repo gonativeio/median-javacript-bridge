@@ -57,7 +57,7 @@ export function addCommand(command: string, params?: AnyData, persistCallback?: 
 
   // Android
   if (window?.JSBridge?.postMessage) {
-    window.JSBridge.postMessage(JSON.stringify(data));
+    window.JSBridge.postMessage(typeof data === "string" ? data : JSON.stringify(data));
   }
   // iOS
   if (window?.webkit?.messageHandlers?.JSBridge?.postMessage) {
