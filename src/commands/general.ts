@@ -282,13 +282,15 @@ const statusbar = {
   },
 };
 
+type TabNavigationItem = {
+  icon: string;
+  label?: string;
+  url: string;
+}
+
 type TabNavigationSetParams = {
   enabled: boolean;
-  items?: {
-    icon: string;
-    label?: string;
-    url: string;
-  };
+  items: [TabNavigationItem]
 };
 
 const tabNavigation = {
