@@ -286,11 +286,11 @@ type TabNavigationItem = {
   icon: string;
   label?: string;
   url: string;
-}
+};
 
 type TabNavigationSetParams = {
   enabled: boolean;
-  items: [TabNavigationItem]
+  items: [TabNavigationItem];
 };
 
 const tabNavigation = {
