@@ -290,7 +290,7 @@ type TabNavigationItem = {
 
 type TabNavigationSetParams = {
   enabled: boolean;
-  items: [TabNavigationItem];
+  items: TabNavigationItem[];
 };
 
 const tabNavigation = {
