@@ -124,6 +124,7 @@ class Median {
     filesystem: plugins.localpreferences.filesystem,
   };
   twilio = plugins.twilio;
+  webScreenshot = plugins.webScreenshot;
   zoom = plugins.zoom;
 
   // Median Functions
