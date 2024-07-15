@@ -161,6 +161,7 @@ class Median {
     }
   };
 
+  appsFlyerConversionData = this.#createListenerProp<AnyData>('_median_appsflyer_cd_success');
   appResumed = this.#createListenerProp('_median_app_resumed');
   branchInitialized = this.#createListenerProp<BranchInitializedData>('_median_branch_initialized');
   deviceShake = this.#createListenerProp('_median_device_shake');
