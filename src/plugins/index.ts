@@ -38,6 +38,7 @@ export { default as permissions } from './permissions';
 export { default as plaid } from './plaid';
 export { default as revenueCat } from './revenueCat';
 export { default as socialLogin } from './socialLogin';
+export { default as socialShare } from './socialShare';
 export { default as twilio } from './twilio';
 export { default as webScreenshot } from './webScreenshot';
 export { default as zoom } from './zoom';
