@@ -162,7 +162,7 @@ const navigationMaxWindows = {
 
 type NavigationTitlesSetParams = {
   active: boolean;
-  titles: { regex: string; title: number }[];
+  titles: { regex: string; showImage?: boolean; title?: number }[];
   persist: boolean;
 };
 
