@@ -166,14 +166,6 @@ type NavigationTitlesSetParams = {
   persist: boolean;
 };
 
-type NavigationTitlesSetCurrentParams = {
-  data: {
-    active: boolean;
-    titles: { regex: string; title: number }[];
-  };
-  persist: boolean;
-};
-
 const navigationTitles = {
   set: function (params: NavigationTitlesSetParams) {
     addCommand('median://navigationTitles/set', {
@@ -181,7 +173,7 @@ const navigationTitles = {
       data: params,
     });
   },
-  setCurrent: function (params: NavigationTitlesSetCurrentParams) {
+  setCurrent: function (params: { title: string }) {
     addCommand('median://navigationTitles/setCurrent', params);
   },
   revert: function () {
