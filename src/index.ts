@@ -118,6 +118,7 @@ class Median {
   purchase = plugins.iap.purchase;
   revenueCat = plugins.revenueCat;
   socialLogin = plugins.socialLogin;
+  socialShare = plugins.socialShare;
   storage = {
     app: plugins.localpreferences.nonpersistent,
     cloud: plugins.localpreferences.persistent,

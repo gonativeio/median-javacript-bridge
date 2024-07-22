@@ -162,15 +162,7 @@ const navigationMaxWindows = {
 
 type NavigationTitlesSetParams = {
   active: boolean;
-  titles: { regex: string; title: number }[];
-  persist: boolean;
-};
-
-type NavigationTitlesSetCurrentParams = {
-  data: {
-    active: boolean;
-    titles: { regex: string; title: number }[];
-  };
+  titles: { regex: string; showImage?: boolean; title?: number }[];
   persist: boolean;
 };
 
@@ -181,7 +173,7 @@ const navigationTitles = {
       data: params,
     });
   },
-  setCurrent: function (params: NavigationTitlesSetCurrentParams) {
+  setCurrent: function (params: { title: string }) {
     addCommand('median://navigationTitles/setCurrent', params);
   },
   revert: function () {
