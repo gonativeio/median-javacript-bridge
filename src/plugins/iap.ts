@@ -10,8 +10,10 @@ type InAppPurchaseParams = Record<string, AnyData> & {
 };
 
 type InAppPurchaseData = Record<string, AnyData> & {
-  platform: string;
-  allPurchases: AnyData[];
+  error?: string;
+  productId: string;
+  transactionId: string;
+  transactionDate: string;
 };
 
 type InAppPurchaseInfo = {
