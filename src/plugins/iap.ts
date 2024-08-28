@@ -9,12 +9,17 @@ type InAppPurchaseParams = Record<string, AnyData> & {
   replacementMode?: string;
 };
 
-type InAppPurchaseData = Record<string, AnyData> & {
-  error?: string;
-  productId: string;
-  transactionId: string;
-  transactionDate: string;
-};
+type InAppPurchaseData =
+  | {
+      error?: string;
+      productId: string;
+      transactionId: string;
+      transactionDate: string;
+    }
+  | {
+      error?: string;
+      success: boolean;
+    };
 
 type InAppPurchaseInfo = {
   inAppPurchases: Record<string, AnyData> & {
