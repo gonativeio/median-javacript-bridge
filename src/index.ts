@@ -77,6 +77,7 @@ class Median {
   window = general.window;
 
   // Plugins
+  adjust = plugins.adjust;
   admob = plugins.admob;
   appreview = plugins.appreview;
   appsflyer = plugins.appsflyer;

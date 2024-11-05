@@ -1,3 +1,4 @@
+export { default as adjust } from './adjust';
 export { default as admob } from './admob';
 export { default as appreview } from './appreview';
 export { default as appsflyer } from './appsflyer';
